@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState} from 'react';
 import { Modal, StyleSheet, View, Text, TextInput, Button} from 'react-native'
 
 export default function Input({autoFocus, inputHandler, visible}) {
@@ -32,8 +32,9 @@ export default function Input({autoFocus, inputHandler, visible}) {
         transparent={false}
         >
             <View style={styles.container}>
+            <View style={styles.modalContent}>
                 <TextInput
-                    style={{borderBottomColor: "purple", borderBottomWidth:2}}
+                    style={styles.input}
                     placeholder="Type here!"
                     autoCorrect={true}
                     keyboardType="default"
@@ -58,6 +59,7 @@ export default function Input({autoFocus, inputHandler, visible}) {
 
                 <Button title="Confirm" onPress={handleConfirm} />
             </View>
+            </View>
         </Modal>
     )
 }
@@ -65,8 +67,41 @@ export default function Input({autoFocus, inputHandler, visible}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
       },
+    modalContent: {
+    width: '80%',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 5,  // For Android shadow
+    },
+    input: {
+    borderBottomColor: "purple",
+    borderBottomWidth: 2,
+    width: '80%',
+    padding: 10,
+    fontSize: 16,
+    marginBottom: 20,
+    },
+    charCount: {
+    fontSize: 14,
+    color: '#000',
+    marginVertical: 10,
+    },
+    message: {
+    fontSize: 16,
+    color: 'red',
+    marginBottom: 20,
+    },
+    buttonContainer: {
+    width: '30%',
+    margin: 10,
+    },
 });
