@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TextInput} from 'react-native'
+import { View, Text, TextInput, Button} from 'react-native'
 
-export default function Input({autoFocus}) {
+export default function Input({autoFocus, inputHandler}) {
     const [text, setText] = useState('');
     const [showCharCount, setShowCharCount] = useState(true);  
     const [message, setMessage] = useState('');
@@ -21,6 +21,11 @@ export default function Input({autoFocus}) {
         setShowCharCount(true);  
         setMessage('');  
     };
+
+    const handleConfirm = () => {
+        inputHandler(text);   
+    };
+
     return (
         <View>
             <TextInput
@@ -46,6 +51,8 @@ export default function Input({autoFocus}) {
                 {message}
                 </Text>
             )}
+
+            <Button title="Confirm" onPress={handleConfirm} />
         </View>
     )
 }
