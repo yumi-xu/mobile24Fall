@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import React, { useState } from 'react';
 import Header from './Components/Header';
 import Input from './Components/Input';
@@ -17,13 +17,19 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      <Text style={styles.headerText}>{appName}</Text>
-      <Button title="Add a goal" onPress={() => setIsModalVisible(true)} />
+      <View style={styles.topSection}>
+        <Text style={styles.headerText}>{appName}</Text>
+        <Button title="Add a goal" onPress={() => setIsModalVisible(true)} color="#1E90FF" />
+      </View>
+    
       <Input autoFocus={true} inputHandler={handleInputData} visible={isModalVisible}/>
-      <Text style={styles.inputText}>{inputData}</Text>
-    </View>
+      <View style={styles.bottomSection}>
+        <Text style={styles.inputText}>{inputData}</Text>
+      </View>    
+    </SafeAreaView>
+    
   );
 }
 
@@ -31,24 +37,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  
+  topSection: {
+    flex: 1, // 占屏幕的 1/5
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
     color: 'purple',
-    marginBottom: 20,
     textAlign: 'center',
     borderColor: 'purple',
     borderWidth: 2,
     padding: 10,
     borderRadius: 10,
   },
+
+  bottomSection: {
+    flex: 4, // 占屏幕的 4/5
+    backgroundColor: '#D8BFD8', // 调整成类似的浅紫色
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   inputText: {
-    marginTop: 20,
     fontSize: 16,
-    color: 'red',
+    color: 'blue', // 与第二张图片的颜色一致
     textAlign: 'center',
+    paddingTop: 20,
   },
 });
