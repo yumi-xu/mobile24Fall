@@ -14,12 +14,12 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
   const [text, setText] = useState("");
   const [showCharCount, setShowCharCount] = useState(true);
   const [message, setMessage] = useState("");
-  const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
+  const isTextValid = text.length >= 3;
 
   //lose focus
   const handleBlur = () => {
     setShowCharCount(false);
-    if (text.length >= 3) {
+    if (isTextValid) {
       setMessage("Thank you");
     } else {
       setMessage("Please type more than 3 characters");
@@ -43,11 +43,11 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
       "Are you sure you want to cancel?",
       [
         {
-          text: "No",
+          text: "Cancel",
           style: "cancel",
         },
         {
-          text: "Yes",
+          text: "OK",
           onPress: () => {
             setText("");
             onCancel();
@@ -60,7 +60,6 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
 
   const handleChangeText = (newText) => {
     setText(newText);
-    setIsConfirmDisabled(newText.length < 3);
   };
 
   return (
@@ -81,7 +80,7 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
           />
           <TextInput
             style={styles.input}
-            placeholder="Type here!"
+            placeholder="Type something"
             autoCorrect={true}
             keyboardType="default"
             value={text}
@@ -102,7 +101,7 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
             <Button
               title="Confirm"
               onPress={handleConfirm}
-              disabled={isConfirmDisabled}
+              disabled={!isTextValid}
               color="#1E90FF"
             />
           </View>
@@ -129,25 +128,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 3,
     elevation: 5,
+    padding: 20,
   },
   input: {
-    borderBottomColor: "purple",
-    borderBottomWidth: 2,
-    width: "80%",
+    borderColor: "purple",
+    borderWidth: 2,
+    width: "70%",
     padding: 10,
     fontSize: 16,
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 10,
   },
   buttonContainer: {
     flexDirection: "row", //horizontally
     justifyContent: "space-between",
     width: "60%",
-    marginTop: 20,
+    marginTop: 10,
   },
   image: {
     width: 100,
     height: 100,
-    marginBottom: 10,
   },
   charCount: {
     fontSize: 14,

@@ -31,9 +31,9 @@ export default function App() {
       <View style={styles.topSection}>
         <Text style={styles.headerText}>{appName}</Text>
         <Button
+          style={styles.btnAddGoal}
           title="Add a goal"
           onPress={() => setIsModalVisible(true)}
-          color="#1E90FF"
         />
       </View>
 
@@ -67,6 +67,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
+  btnAddGoal: {
+    color: "#1E90FF",
+  },
+
   headerText: {
     fontSize: 24,
     fontWeight: "bold",
@@ -76,6 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 10,
     borderRadius: 10,
+    marginBottom: 20,
   },
 
   bottomSection: {
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
   textWrapper: {
     borderRadius: 5,
     backgroundColor: "#E6E6FA",
+    margin: 10,
     padding: 10,
     borderWidth: 1,
     borderColor: "#ccc",
