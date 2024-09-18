@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     buttonContainer: {
-        flexDirection: 'row',
+        flexDirection: 'row',//horizontally
         justifyContent: 'space-between',
         width: '60%',
         marginTop: 20,
