@@ -14,12 +14,12 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
   const [text, setText] = useState("");
   const [showCharCount, setShowCharCount] = useState(true);
   const [message, setMessage] = useState("");
-  const isTextValid = text.length >= 3;
+  const isTextValid = text.length > 0;
 
   //lose focus
   const handleBlur = () => {
     setShowCharCount(false);
-    if (isTextValid) {
+    if (text.length >= 3) {
       setMessage("Thank you");
     } else {
       setMessage("Please type more than 3 characters");
@@ -33,8 +33,17 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
   };
 
   const handleConfirm = () => {
-    inputHandler(text);
-    setText("");
+    if (text.length >= 3) {
+      inputHandler(text);
+      setText("");
+    } else {
+      Alert.alert(
+        "Invalid Input",
+        "Please type more than 3 characters",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: true }
+      );
+    }
   };
 
   const handleCancel = () => {
@@ -97,12 +106,16 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
           {message.length > 0 && <Text>{message}</Text>}
 
           <View style={styles.buttonContainer}>
-            <Button title="Cancel" onPress={handleCancel} color="#1E90FF" />
+            <Button
+              title="Cancel"
+              onPress={handleCancel}
+              style={styles.button}
+            />
             <Button
               title="Confirm"
               onPress={handleConfirm}
               disabled={!isTextValid}
-              color="#1E90FF"
+              style={styles.button}
             />
           </View>
         </View>
@@ -158,5 +171,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "red",
     marginBottom: 20,
+  },
+  button: {
+    color: "#1E90FF",
   },
 });
