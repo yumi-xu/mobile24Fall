@@ -80,12 +80,12 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
               uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
             }}
             style={styles.image}
-            alt="Network image"
+            alt="Network image" //The text that's read by the screen reader when the user interacts with the image.
           />
           <Image
             source={require("../assets/arrow.png")}
             style={styles.image}
-            alt="Local image"
+            alt="Local image" //The text that's read by the screen reader when the user interacts with the image.
           />
           <TextInput
             style={styles.input}
