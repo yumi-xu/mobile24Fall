@@ -1,10 +1,11 @@
 import React, { useState} from 'react';
-import { Modal, StyleSheet, View, Text, TextInput, Button} from 'react-native'
+import { Modal, StyleSheet, View, Text, TextInput, Button, Alert, Image} from 'react-native'
 
-export default function Input({autoFocus, inputHandler, visible}) {
+export default function Input({autoFocus, inputHandler, visible, onCancel}) {
     const [text, setText] = useState('');
     const [showCharCount, setShowCharCount] = useState(true);  
     const [message, setMessage] = useState('');
+    const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
 
     //lose focus
     const handleBlur = () => {
@@ -23,7 +24,34 @@ export default function Input({autoFocus, inputHandler, visible}) {
     };
 
     const handleConfirm = () => {
-        inputHandler(text);   
+        inputHandler(text); 
+        setText('');   
+    };
+
+    const handleCancel = () => {
+        Alert.alert(
+            "Cancel",
+            "Are you sure you want to cancel?",
+            [
+                {
+                    text: "No",
+                    style: "cancel",
+                },
+                {
+                    text: "Yes",
+                    onPress: () => {
+                        setText('');  
+                        onCancel();  
+                    },
+                },
+            ],
+            { cancelable: true }
+        );
+    };
+
+    const handleChangeText = (newText) => {
+        setText(newText);
+        setIsConfirmDisabled(newText.length < 3);
     };
 
     return (
@@ -33,13 +61,23 @@ export default function Input({autoFocus, inputHandler, visible}) {
         >
             <View style={styles.container}>
             <View style={styles.modalContent}>
+                <Image
+                    source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
+                    style={styles.image}
+                    alt="Network image"
+                />
+                <Image
+                    source={require('../assets/arrow.png')}
+                    style={styles.image}
+                    alt="Local image"
+                />
                 <TextInput
                     style={styles.input}
                     placeholder="Type here!"
                     autoCorrect={true}
                     keyboardType="default"
                     value={text}
-                    onChangeText={newText=>setText(newText)} 
+                    onChangeText={handleChangeText} 
                     onBlur={handleBlur}
                     onFocus={handleFocus}
                     autoFocus={autoFocus}
@@ -57,7 +95,10 @@ export default function Input({autoFocus, inputHandler, visible}) {
                     </Text>
                 )}
 
-                <Button title="Confirm" onPress={handleConfirm} />
+                <View style={styles.buttonContainer}>
+                        <Button title="Cancel" onPress={handleCancel} color="#1E90FF" />
+                        <Button title="Confirm" onPress={handleConfirm} disabled={isConfirmDisabled} color="#1E90FF" />
+                </View>
             </View>
             </View>
         </Modal>
@@ -71,37 +112,45 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     modalContent: {
-    width: '80%',
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 3,
-    elevation: 5,  // For Android shadow
+        width: '80%',
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 3,
+        elevation: 5,  
     },
     input: {
-    borderBottomColor: "purple",
-    borderBottomWidth: 2,
-    width: '80%',
-    padding: 10,
-    fontSize: 16,
-    marginBottom: 20,
-    },
-    charCount: {
-    fontSize: 14,
-    color: '#000',
-    marginVertical: 10,
-    },
-    message: {
-    fontSize: 16,
-    color: 'red',
-    marginBottom: 20,
+        borderBottomColor: "purple",
+        borderBottomWidth: 2,
+        width: '80%',
+        padding: 10,
+        fontSize: 16,
+        marginBottom: 20,
     },
     buttonContainer: {
-    width: '30%',
-    margin: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '60%',
+        marginTop: 20,
     },
+    image: {
+        width: 100,
+        height: 100,
+        marginBottom: 20,
+    },
+    charCount: {
+        fontSize: 14,
+        color: '#000',
+        marginVertical: 10,
+    },
+    message: {
+        fontSize: 16,
+        color: 'red',
+        marginBottom: 20,
+    },
+   
 });

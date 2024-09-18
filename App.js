@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button, StatusBar} from 'react-native';
 import React, { useState } from 'react';
 import Header from './Components/Header';
 import Input from './Components/Input';
@@ -11,10 +10,13 @@ export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleInputData = (data) => {
-    console.log("app.js", data);
     setInputData(data);
     setIsModalVisible(false);
   }
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,7 +26,7 @@ export default function App() {
         <Button title="Add a goal" onPress={() => setIsModalVisible(true)} color="#1E90FF" />
       </View>
     
-      <Input autoFocus={true} inputHandler={handleInputData} visible={isModalVisible}/>
+      <Input autoFocus={true} inputHandler={handleInputData} visible={isModalVisible} onCancel={handleCancel}/>
       <View style={styles.bottomSection}>
         {inputData.length > 0 ? (  
           <View style={styles.textWrapper}>
@@ -61,28 +63,28 @@ const styles = StyleSheet.create({
   },
 
   bottomSection: {
-    flex: 4,  // 保证底部部分占据屏幕大部分空间
+    flex: 4,  
     backgroundColor: '#D8BFD8', 
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
   textWrapper: {
-    borderRadius: 5, // 调整边角为5以符合设计
+    borderRadius: 5, 
     backgroundColor: '#E6E6FA',
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
-    shadowColor: '#000', // 添加阴影效果
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 }, 
     shadowOpacity: 0.8,
     shadowRadius: 3,
-    elevation: 3,  // 为Android设备提供阴影效果
+    elevation: 3,  
   },
 
   inputText: {
-    fontSize: 18, // 调整字体大小以确保易读性
-    color: 'black',  // 使用黑色文字提高对比度
+    fontSize: 18, 
+    color: 'black',  
     textAlign: 'center',
   },
 
