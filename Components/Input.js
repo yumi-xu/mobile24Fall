@@ -64,7 +64,7 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
   };
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={false}>
+    <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.container}>
         <View style={styles.modalContent}>
           <Image
@@ -117,11 +117,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "transparent",
   },
   modalContent: {
     width: "80%",
     backgroundColor: "#fff",
-    padding: 20,
     borderRadius: 10,
     alignItems: "center",
     shadowColor: "#000",
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   charCount: {
     fontSize: 14,
