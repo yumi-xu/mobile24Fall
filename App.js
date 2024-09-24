@@ -14,13 +14,12 @@ export default function App() {
   const appName = "Welcome to My awesome app";
 
   const [goals, setGoals] = useState([]);
-  //const [inputData, setInputData] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleInputData = (data) => {
     const newGoal = { text: data, id: Math.random().toString() };
+    //add new goals
     setGoals((currentGoals) => [...currentGoals, newGoal]);
-    //setInputData(data);
     setIsModalVisible(false);
   };
 
@@ -47,11 +46,6 @@ export default function App() {
         onCancel={handleCancel}
       />
       <View style={styles.bottomSection}>
-        {/*{inputData.length > 0 ? (*/}
-        {/*  <View style={styles.textWrapper}>*/}
-        {/*    <Text style={styles.inputText}>{inputData}</Text>*/}
-        {/*  </View>*/}
-        {/*) : null}*/}
         <FlatList
           data={goals}
           renderItem={(itemData) => (
