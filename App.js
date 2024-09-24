@@ -4,7 +4,7 @@ import {
   Text,
   View,
   Button,
-  StatusBar,
+  StatusBar, FlatList,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "./Components/Header";
@@ -13,11 +13,14 @@ import Input from "./Components/Input";
 export default function App() {
   const appName = "Welcome to My awesome app";
 
-  const [inputData, setInputData] = useState("");
+  const [goals, setGoals] = useState([]);
+  //const [inputData, setInputData] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleInputData = (data) => {
-    setInputData(data);
+    const newGoal = { text: data, id: Math.random().toString() };
+    setGoals((currentGoals) => [...currentGoals, newGoal]);
+    //setInputData(data);
     setIsModalVisible(false);
   };
 
@@ -44,11 +47,20 @@ export default function App() {
         onCancel={handleCancel}
       />
       <View style={styles.bottomSection}>
-        {inputData.length > 0 ? (
-          <View style={styles.textWrapper}>
-            <Text style={styles.inputText}>{inputData}</Text>
-          </View>
-        ) : null}
+        {/*{inputData.length > 0 ? (*/}
+        {/*  <View style={styles.textWrapper}>*/}
+        {/*    <Text style={styles.inputText}>{inputData}</Text>*/}
+        {/*  </View>*/}
+        {/*) : null}*/}
+        <FlatList
+          data={goals}
+          renderItem={(itemData) => (
+            <View style={styles.textWrapper}>
+              <Text style={styles.inputText}>{itemData.item.text}</Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </SafeAreaView>
   );
@@ -108,5 +120,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "black",
     textAlign: "center",
+    borderRadius: 5
   },
 });
