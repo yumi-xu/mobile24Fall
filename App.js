@@ -28,6 +28,12 @@ export default function App() {
     setIsModalVisible(false);
   };
 
+  const deleteGoalHandler = (goalId) => {
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== goalId);
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -52,7 +58,9 @@ export default function App() {
           renderItem={(itemData) => (
             <View style={styles.textWrapper}>
               {/*<Text style={styles.inputText}>{itemData.item.text}</Text>*/}
-              <GoalItem text={itemData.item.text}/>
+              <GoalItem text={itemData.item.text}
+                        onDelete={() => deleteGoalHandler(itemData.item.id)}
+              />
             </View>
           )}
           keyExtractor={(item) => item.id}
