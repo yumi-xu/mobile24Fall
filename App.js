@@ -4,7 +4,7 @@ import {
   Text,
   View,
   Button,
-  StatusBar, FlatList,
+  StatusBar, FlatList, ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "./Components/Header";
@@ -45,16 +45,25 @@ export default function App() {
         visible={isModalVisible}
         onCancel={handleCancel}
       />
+      {/*<View style={styles.bottomSection}>*/}
+      {/*  <FlatList*/}
+      {/*    data={goals}*/}
+      {/*    renderItem={(itemData) => (*/}
+      {/*      <View style={styles.textWrapper}>*/}
+      {/*        <Text style={styles.inputText}>{itemData.item.text}</Text>*/}
+      {/*      </View>*/}
+      {/*    )}*/}
+      {/*    keyExtractor={(item) => item.id}*/}
+      {/*  />*/}
+      {/*</View>*/}
       <View style={styles.bottomSection}>
-        <FlatList
-          data={goals}
-          renderItem={(itemData) => (
-            <View style={styles.textWrapper}>
-              <Text style={styles.inputText}>{itemData.item.text}</Text>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          {goals.map((goal) => (
+            <View style={styles.textWrapper} key={goal.id}>
+              <Text style={styles.inputText}>{goal.text}</Text>
             </View>
-          )}
-          keyExtractor={(item) => item.id}
-        />
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -90,10 +99,15 @@ const styles = StyleSheet.create({
   },
 
   bottomSection: {
-    flex: 4,
+    flex: 3,
     backgroundColor: "#D8BFD8",
-    justifyContent: "flex-start",
+    justifyContent: "center",
+    width: '100%'
+  },
+
+  contentContainer: {
     alignItems: "center",
+    paddingBottom: 20,
   },
 
   textWrapper: {
