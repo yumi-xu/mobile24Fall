@@ -45,26 +45,26 @@ export default function App() {
         visible={isModalVisible}
         onCancel={handleCancel}
       />
-      {/*<View style={styles.bottomSection}>*/}
-      {/*  <FlatList*/}
-      {/*    data={goals}*/}
-      {/*    renderItem={(itemData) => (*/}
-      {/*      <View style={styles.textWrapper}>*/}
-      {/*        <Text style={styles.inputText}>{itemData.item.text}</Text>*/}
-      {/*      </View>*/}
-      {/*    )}*/}
-      {/*    keyExtractor={(item) => item.id}*/}
-      {/*  />*/}
-      {/*</View>*/}
       <View style={styles.bottomSection}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          {goals.map((goal) => (
-            <View style={styles.textWrapper} key={goal.id}>
-              <Text style={styles.inputText}>{goal.text}</Text>
+        <FlatList contentContainerStyle={styles.contentContainer}
+          data={goals}
+          renderItem={(itemData) => (
+            <View style={styles.textWrapper}>
+              <Text style={styles.inputText}>{itemData.item.text}</Text>
             </View>
-          ))}
-        </ScrollView>
+          )}
+          keyExtractor={(item) => item.id}
+        />
       </View>
+      {/*<View style={styles.bottomSection}>*/}
+      {/*  <ScrollView contentContainerStyle={styles.contentContainer}>*/}
+      {/*    {goals.map((goal) => (*/}
+      {/*      <View style={styles.textWrapper} key={goal.id}>*/}
+      {/*        <Text style={styles.inputText}>{goal.text}</Text>*/}
+      {/*      </View>*/}
+      {/*    ))}*/}
+      {/*  </ScrollView>*/}
+      {/*</View>*/}
     </SafeAreaView>
   );
 }
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     flex: 3,
     backgroundColor: "#D8BFD8",
     justifyContent: "center",
-    width: '100%'
   },
 
   contentContainer: {
