@@ -12,30 +12,13 @@ import {
 
 export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
   const [text, setText] = useState("");
-  const [showCharCount, setShowCharCount] = useState(true);
-  const [message, setMessage] = useState("");
+  const [blur, setBlur] = useState(false);
   const isTextValid = text.length > 0;
 
-  //lose focus
-  const handleBlur = () => {
-    setShowCharCount(false);
-    if (text.length >= 3) {
-      setMessage("Thank you");
-    } else {
-      setMessage("Please type more than 3 characters");
-    }
-  };
-
-  //gain focus
-  const handleFocus = () => {
-    setShowCharCount(true);
-    setMessage("");
-  };
-
   const handleConfirm = () => {
+    setText("");
     if (text.length >= 3) {
       inputHandler(text);
-      setText("");
     } else {
       Alert.alert(
         "Invalid Input",
@@ -94,16 +77,24 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
             keyboardType="default"
             value={text}
             onChangeText={handleChangeText}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
+            onBlur={()=>{
+              setBlur(true)
+            }}
+            onFocus={()=>{
+              setBlur(false)
+            }}
             autoFocus={autoFocus}
           />
 
-          {showCharCount && text.length > 0 && (
-            <Text>Character Count: {text.length}</Text>
+          {blur ? (
+            text.length >= 3 ? (
+              <Text>Thank you</Text>
+            ) : (
+              <Text>Please type more than 3 characters</Text>
+            )
+          ) : (
+            text && <Text>Character Count: {text.length}</Text>
           )}
-
-          {message.length > 0 && <Text>{message}</Text>}
 
           <View style={styles.buttonContainer}>
             <Button
