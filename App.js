@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import Header from "./Components/Header";
 import Input from "./Components/Input";
+import GoalItem from "./Components/GoalItem";
 
 export default function App() {
   const appName = "Welcome to My awesome app";
