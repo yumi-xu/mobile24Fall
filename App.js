@@ -68,24 +68,25 @@ export default function App() {
         onCancel={handleCancel}
       />
       <View style={styles.bottomSection}>
-        <FlatList contentContainerStyle={styles.contentContainer}
+        <FlatList
+          contentContainerStyle={styles.contentContainer}
           data={goals}
           ListHeaderComponent={() =>
             goals.length > 0 ? (
-              <Text style={styles.headerText}>My Goal List</Text>
+              <Text style={styles.goalsHeaderText}>My Goal List</Text>
             ) : null
           }
           ListEmptyComponent={() => (
-            <Text style={styles.noGoalsText}>No goals to show</Text>
+            <Text style={styles.goalsHeaderText}>No goals to show</Text>
           )}
           renderItem={(itemData) => (
-            <View style={styles.textWrapper}>
-              <GoalItem text={itemData.item.text}
-                        onDelete={() => deleteGoalHandler(itemData.item.id)}
-              />
-            </View>
+            <GoalItem
+              text={itemData.item.text}
+              onDelete={() => deleteGoalHandler(itemData.item.id)}
+            />
           )}
           keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListFooterComponent={() =>
             goals.length > 0 ? (
               <Button title="Delete all" onPress={deleteAllGoalsHandler} />
@@ -137,10 +138,19 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 
-  noGoalsText: {
+  goalsHeaderText: {
     fontSize: 18,
-    color: "gray",
+    color: "purple",
     textAlign: "center",
     paddingTop: 20,
+  },
+
+  separator: {
+    height: 2,
+    width: 200,
+    backgroundColor: "grey",
+    alignSelf: "center",
+    borderColor: "transparent",
+    borderWidth: 0,
   },
 });
