@@ -36,6 +36,19 @@ export default function App() {
     });
   };
 
+  const deleteAllGoalsHandler = () => {
+    Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
+      {
+        text: "No",
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: () => setGoals([]),
+      },
+    ]);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -73,6 +86,11 @@ export default function App() {
             </View>
           )}
           keyExtractor={(item) => item.id}
+          ListFooterComponent={() =>
+            goals.length > 0 ? (
+              <Button title="Delete all" onPress={deleteAllGoalsHandler} />
+            ) : null
+          }
         />
       </View>
     </SafeAreaView>
@@ -117,5 +135,12 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: "center",
     paddingBottom: 20,
+  },
+
+  noGoalsText: {
+    fontSize: 18,
+    color: "gray",
+    textAlign: "center",
+    paddingTop: 20,
   },
 });
