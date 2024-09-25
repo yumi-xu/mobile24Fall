@@ -4,7 +4,9 @@ import {
   Text,
   View,
   Button,
-  StatusBar, FlatList, ScrollView,
+  StatusBar,
+  FlatList,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "./Components/Header";
@@ -55,9 +57,16 @@ export default function App() {
       <View style={styles.bottomSection}>
         <FlatList contentContainerStyle={styles.contentContainer}
           data={goals}
+          ListHeaderComponent={() =>
+            goals.length > 0 ? (
+              <Text style={styles.headerText}>My Goal List</Text>
+            ) : null
+          }
+          ListEmptyComponent={() => (
+            <Text style={styles.noGoalsText}>No goals to show</Text>
+          )}
           renderItem={(itemData) => (
             <View style={styles.textWrapper}>
-              {/*<Text style={styles.inputText}>{itemData.item.text}</Text>*/}
               <GoalItem text={itemData.item.text}
                         onDelete={() => deleteGoalHandler(itemData.item.id)}
               />
