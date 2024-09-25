@@ -73,7 +73,7 @@ export default function App() {
           data={goals}
           ListHeaderComponent={() =>
             goals.length > 0 ? (
-              <Text style={styles.goalsHeaderText}>My Goal List</Text>
+              <Text style={styles.goalsHeaderText}>My goals</Text>
             ) : null
           }
           ListEmptyComponent={() => (
