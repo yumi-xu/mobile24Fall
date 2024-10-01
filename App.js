@@ -1,58 +1,156 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./Components/Home";
-import GoalDetails from "./Components/GoalDetail";
-import {Alert, Button} from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  StatusBar,
+  FlatList,
+  Alert,
+} from "react-native";
+import React, { useState } from "react";
+import Header from "./Components/Header";
+import Input from "./Components/Input";
+import GoalItem from "./Components/GoalItem";
 
-const Stack = createNativeStackNavigator();
 export default function App() {
+  const appName = "Welcome to My awesome app";
+
+  const [goals, setGoals] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleInputData = (data) => {
+    const newGoal = { text: data, id: Math.random().toString() };
+    //add new goals
+    setGoals((currentGoals) => [...currentGoals, newGoal]);
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const deleteGoalHandler = (goalId) => {
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== goalId);
+    });
+  };
+
+  const deleteAllGoalsHandler = () => {
+    Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
+      {
+        text: "No",
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: () => setGoals([]),
+      },
+    ]);
+  };
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            title: "Home",
-            headerStyle: {
-              backgroundColor: "#6200EE",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" />
+      <View style={styles.topSection}>
+        <Text style={styles.headerText}>{appName}</Text>
+        <Button
+          style={styles.btnAddGoal}
+          title="Add a goal"
+          onPress={() => setIsModalVisible(true)}
         />
-        <Stack.Screen
-          name="Details"
-          component={GoalDetails}
-          options={({ route, navigation }) => ({
-            title: route.params ? route.params.goal.text : "More Details",
-            headerStyle: {
-              backgroundColor: "#003366",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "600",
-            },
-            headerLeft: () => (
-              <Button
-                title="All My Goals"
-                color="#fff"
-                onPress={() => navigation.goBack()}
-              />
-            ),
-            headerRight: () => (
-              <Button
-                title="Warning"
-                color="#ff3333"
-                onPress={() => Alert.alert("Warning!", "This is a custom warning button.")}
-              />
-            ),
-          })}
+      </View>
+
+      <Input
+        autoFocus={true}
+        inputHandler={handleInputData}
+        visible={isModalVisible}
+        onCancel={handleCancel}
+      />
+      <View style={styles.bottomSection}>
+        <FlatList
+          contentContainerStyle={styles.contentContainer}
+          data={goals}
+          ListHeaderComponent={() =>
+            goals.length > 0 ? (
+              <Text style={styles.goalsHeaderText}>My goals</Text>
+            ) : null
+          }
+          ListEmptyComponent={() => (
+            <Text style={styles.goalsHeaderText}>No goals to show</Text>
+          )}
+          renderItem={(itemData) => (
+            <GoalItem
+              text={itemData.item.text}
+              onDelete={() => deleteGoalHandler(itemData.item.id)}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ListFooterComponent={() =>
+            goals.length > 0 ? (
+              <Button title="Delete all" onPress={deleteAllGoalsHandler} />
+            ) : null
+          }
         />
-      </Stack.Navigator>
-    </NavigationContainer>
+      </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+
+  topSection: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+
+  btnAddGoal: {
+    color: "#1E90FF",
+  },
+
+  headerText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "purple",
+    textAlign: "center",
+    borderColor: "purple",
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+
+  bottomSection: {
+    flex: 3,
+    backgroundColor: "#D8BFD8",
+    justifyContent: "center",
+  },
+
+  contentContainer: {
+    alignItems: "center",
+    paddingBottom: 20,
+  },
+
+  goalsHeaderText: {
+    fontSize: 18,
+    color: "purple",
+    textAlign: "center",
+    paddingTop: 20,
+  },
+
+  separator: {
+    height: 2,
+    width: 200,
+    backgroundColor: "grey",
+    alignSelf: "center",
+    borderColor: "transparent",
+    borderWidth: 0,
+  },
+});

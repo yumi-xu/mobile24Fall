@@ -1,13 +1,12 @@
 import { View, Text, StyleSheet, Button } from "react-native";
 import React from "react";
 
-export default function GoalItem({ text, onDelete, onNavigate, goalObj }) {
+export default function GoalItem(goalObj) {
   return (
     <View style={styles.wrap}>
       <View style={styles.textWrapper}>
-        <Text style={styles.inputText}>{text}</Text>
-        <Button title="X" color="red" onPress={onDelete} />
-        <Button title="i" color="blue" onPress={() => onNavigate(goalObj)} />
+        <Text style={styles.inputText}>{goalObj.text}</Text>
+        <Button title="X" color="red" onPress={goalObj.onDelete} />
       </View>
     </View>
   );
