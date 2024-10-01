@@ -12,9 +12,10 @@ const GoalDetails = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.detailText}>This is Details:</Text>
-      <Text style={styles.goalText}>Text: {goal.text}</Text>
-      <Text style={styles.goalText}>ID: {goal.id}</Text>
+      {route.params ?
+        (<Text style={styles.detailText}>Text: {goal.text} id :{goal.id}</Text>):
+        (<Text>"More Details"</Text>)
+      }
 
       <Button
         title="More details"

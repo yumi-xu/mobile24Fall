@@ -28,7 +28,7 @@ export default function App() {
           name="Details"
           component={GoalDetails}
           options={({ route, navigation }) => ({
-            title: route.params.goal.text,
+            title: route.params ? route.params.goal.text : "More Details",
             headerStyle: {
               backgroundColor: "#003366",
             },
