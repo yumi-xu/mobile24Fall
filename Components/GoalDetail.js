@@ -3,26 +3,22 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 
 const GoalDetails = ({ route }) => {
-  const { goal } = route.params;
-  console.log(route.params);
   const navigation = useNavigation();
-  // function moreDetailHandle(){
-  //   navigation.navigate("Details");
-  // }
+  console.log(route.params);
+  function moreDetailHandle(){
+    navigation.navigate("Details");
+  }
 
   return (
     <View style={styles.container}>
       {route.params ?
-        (<Text style={styles.detailText}>Text: {goal.text} id :{goal.id}</Text>):
-        (<Text>"More Details"</Text>)
+        (<Text style={styles.detailText}>Text: {route.params.goal.text} id :{route.params.goal.id}</Text>):
+        (<Text>More Details</Text>)
       }
 
       <Button
         title="More details"
-        //onPress={moreDetailHandle}
-        onPress={() =>
-          navigation.push('Details', { goal: goal }) // Push a new GoalDetails screen onto the stack
-        }
+        onPress={moreDetailHandle}
       />
     </View>
 
