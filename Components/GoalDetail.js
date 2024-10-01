@@ -6,7 +6,7 @@ const GoalDetails = ({ route }) => {
   const navigation = useNavigation();
   console.log(route.params);
   function moreDetailHandle(){
-    navigation.navigate("Details");
+    navigation.push("Details");
   }
 
   return (
