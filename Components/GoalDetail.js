@@ -37,10 +37,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: 'bold',
   },
-  goalText: {
-    fontSize: 18,
-    color: 'purple',
-  },
 });
 
 export default GoalDetails;
