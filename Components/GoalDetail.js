@@ -4,16 +4,21 @@ import {useNavigation} from "@react-navigation/native";
 
 const GoalDetails = ({ route }) => {
   const { goal } = route.params;
+  console.log(route.params);
   const navigation = useNavigation();
+  // function moreDetailHandle(){
+  //   navigation.navigate("Details");
+  // }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.detailText}>Goal Details:</Text>
+      <Text style={styles.detailText}>This is Details:</Text>
       <Text style={styles.goalText}>Text: {goal.text}</Text>
       <Text style={styles.goalText}>ID: {goal.id}</Text>
 
       <Button
         title="More details"
+        //onPress={moreDetailHandle}
         onPress={() =>
           navigation.push('Details', { goal: goal }) // Push a new GoalDetails screen onto the stack
         }

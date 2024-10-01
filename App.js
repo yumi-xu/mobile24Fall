@@ -26,8 +26,8 @@ export default function App() {
         <Stack.Screen
           name="Details"
           component={GoalDetails}
-          options={{
-            title: "Goal Details",
+          options={({ route }) => ({
+            title: route.params.goal.text,
             headerStyle: {
               backgroundColor: "#003366",
             },
@@ -35,7 +35,7 @@ export default function App() {
             headerTitleStyle: {
               fontWeight: "600",
             },
-          }}
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
