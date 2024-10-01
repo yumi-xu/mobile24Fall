@@ -4,7 +4,9 @@ import {
   Text,
   View,
   Button,
-  StatusBar, FlatList, ScrollView,
+  StatusBar,
+  FlatList,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "./Components/Header";
@@ -34,6 +36,19 @@ export default function App() {
     });
   };
 
+  const deleteAllGoalsHandler = () => {
+    Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
+      {
+        text: "No",
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: () => setGoals([]),
+      },
+    ]);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -53,17 +68,30 @@ export default function App() {
         onCancel={handleCancel}
       />
       <View style={styles.bottomSection}>
-        <FlatList contentContainerStyle={styles.contentContainer}
+        <FlatList
+          contentContainerStyle={styles.contentContainer}
           data={goals}
+          ListHeaderComponent={() =>
+            goals.length > 0 ? (
+              <Text style={styles.goalsHeaderText}>My goals</Text>
+            ) : null
+          }
+          ListEmptyComponent={() => (
+            <Text style={styles.goalsHeaderText}>No goals to show</Text>
+          )}
           renderItem={(itemData) => (
-            <View style={styles.textWrapper}>
-              {/*<Text style={styles.inputText}>{itemData.item.text}</Text>*/}
-              <GoalItem text={itemData.item.text}
-                        onDelete={() => deleteGoalHandler(itemData.item.id)}
-              />
-            </View>
+            <GoalItem
+              text={itemData.item.text}
+              onDelete={() => deleteGoalHandler(itemData.item.id)}
+            />
           )}
           keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ListFooterComponent={() =>
+            goals.length > 0 ? (
+              <Button title="Delete all" onPress={deleteAllGoalsHandler} />
+            ) : null
+          }
         />
       </View>
     </SafeAreaView>
@@ -108,5 +136,21 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: "center",
     paddingBottom: 20,
+  },
+
+  goalsHeaderText: {
+    fontSize: 18,
+    color: "purple",
+    textAlign: "center",
+    paddingTop: 20,
+  },
+
+  separator: {
+    height: 2,
+    width: 200,
+    backgroundColor: "grey",
+    alignSelf: "center",
+    borderColor: "transparent",
+    borderWidth: 0,
   },
 });
