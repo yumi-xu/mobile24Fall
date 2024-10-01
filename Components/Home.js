@@ -38,6 +38,10 @@ export default function Home() {
     });
   };
 
+  const handleNavigate = () => {
+    //navigation.navigate("Details", { goalText: itemData.item.text })
+  }
+
   const deleteAllGoalsHandler = () => {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {

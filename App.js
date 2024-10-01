@@ -12,12 +12,30 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ title: "Home" }}
+          options={{
+            title: "Home",
+            headerStyle: {
+              backgroundColor: "#6200EE",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
         />
         <Stack.Screen
           name="Details"
           component={GoalDetails}
-          options={{ title: "Goal Details" }}
+          options={{
+            title: "Goal Details",
+            headerStyle: {
+              backgroundColor: "#003366",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "600",
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
