@@ -38,10 +38,6 @@ export default function Home() {
     });
   };
 
-  const handleNavigate = () => {
-    //navigation.navigate("Details", { goalText: itemData.item.text })
-  }
-
   const deleteAllGoalsHandler = () => {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
@@ -89,7 +85,7 @@ export default function Home() {
             <GoalItem
               text={itemData.item.text}
               onDelete={() => deleteGoalHandler(itemData.item.id)}
-              onNavigate={() => navigation.navigate("Details", { goalText: itemData.item.text })}
+              onNavigate={() => navigation.navigate("Details", { goal:itemData.item})}
             />
           )}
           keyExtractor={(item) => item.id}

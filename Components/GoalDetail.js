@@ -2,12 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const GoalDetails = ({ route }) => {
-  const { goalText } = route.params;
+  const { goal } = route.params;
 
   return (
     <View style={styles.container}>
       <Text style={styles.detailText}>Goal Details:</Text>
-      <Text style={styles.goalText}>{goalText}</Text>
+      <Text style={styles.goalText}>Text: {goal.text}</Text>
+      <Text style={styles.goalText}>ID: {goal.id}</Text>
     </View>
   );
 };
