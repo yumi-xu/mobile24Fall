@@ -22,16 +22,7 @@ export default function App() {
         <Stack.Screen
           name="Details"
           component={GoalDetails}
-          options={({ navigation }) => ({
-            ...headerStyles,
-            headerLeft: () => (
-              <Button
-                title="All My Goals"
-                color="#fff"
-                onPress={() => navigation.goBack()}
-              />
-            ),
-          })}
+          options={{ ...headerStyles }}
         />
       </Stack.Navigator>
     </NavigationContainer>

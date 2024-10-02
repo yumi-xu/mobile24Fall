@@ -8,10 +8,21 @@ const GoalDetails = ({ route }) => {
 
   const [isWarning, setIsWarning] = useState(false);
 
-  const headerTitle = isWarning ? "Warning!" : route.params.goal.text;
+  const headerTitle = isWarning
+    ? "Warning!"
+    : route.params
+      ? route.params.goal.text
+      : "More Details";
 
   useEffect(() => {
     navigation.setOptions({
+      headerLeft: () => (
+        <Button
+          title="All My Goals"
+          color="#fff"
+          onPress={() => navigation.goBack()}
+        />
+      ),
       headerRight: () => (
         <Button
           title="Warning"
@@ -31,7 +42,7 @@ const GoalDetails = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      {route.params.goal ? (
+      {route.params ? (
         <Text
           style={
             isWarning
