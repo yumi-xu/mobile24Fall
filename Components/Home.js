@@ -83,9 +83,8 @@ export default function Home() {
           )}
           renderItem={(itemData) => (
             <GoalItem
-              text={itemData.item.text}
+              item={itemData.item}
               onDelete={() => deleteGoalHandler(itemData.item.id)}
-              onNavigate={() => navigation.navigate("Details", { goal:itemData.item})}
             />
           )}
           keyExtractor={(item) => item.id}
