@@ -24,7 +24,7 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
         "Invalid Input",
         "Please type more than 3 characters",
         [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-        { cancelable: true }
+        { cancelable: true },
       );
     }
   };
@@ -46,7 +46,7 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
           },
         },
       ],
-      { cancelable: true }
+      { cancelable: true },
     );
   };
 
@@ -77,11 +77,11 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
             keyboardType="default"
             value={text}
             onChangeText={handleChangeText}
-            onBlur={()=>{
-              setBlur(true)
+            onBlur={() => {
+              setBlur(true);
             }}
-            onFocus={()=>{
-              setBlur(false)
+            onFocus={() => {
+              setBlur(false);
             }}
             autoFocus={autoFocus}
           />

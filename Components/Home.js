@@ -8,7 +8,6 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import Header from "./Header";
 import Input from "./Input";
@@ -19,7 +18,6 @@ export default function Home() {
 
   const [goals, setGoals] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigation = useNavigation();
 
   const handleInputData = (data) => {
     const newGoal = { text: data, id: Math.random().toString() };
@@ -83,9 +81,8 @@ export default function Home() {
           )}
           renderItem={(itemData) => (
             <GoalItem
-              text={itemData.item.text}
+              item={itemData.item}
               onDelete={() => deleteGoalHandler(itemData.item.id)}
-              onNavigate={() => navigation.navigate("Details", { goal:itemData.item})}
             />
           )}
           keyExtractor={(item) => item.id}

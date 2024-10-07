@@ -3,7 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Components/Home";
 import GoalDetails from "./Components/GoalDetail";
-import {Alert, Button} from "react-native";
+import { Button } from "react-native";
+import { headerStyles } from "./Components/Styles";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -14,43 +15,14 @@ export default function App() {
           name="Home"
           component={Home}
           options={{
+            ...headerStyles,
             title: "Home",
-            headerStyle: {
-              backgroundColor: "#6200EE",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
           }}
         />
         <Stack.Screen
           name="Details"
           component={GoalDetails}
-          options={({ route, navigation }) => ({
-            title: route.params ? route.params.goal.text : "More Details",
-            headerStyle: {
-              backgroundColor: "#003366",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "600",
-            },
-            headerLeft: () => (
-              <Button
-                title="All My Goals"
-                color="#fff"
-                onPress={() => navigation.goBack()}
-              />
-            ),
-            headerRight: () => (
-              <Button
-                title="Warning"
-                color="#ff3333"
-                onPress={() => Alert.alert("Warning!", "This is a custom warning button.")}
-              />
-            ),
-          })}
+          options={{ ...headerStyles }}
         />
       </Stack.Navigator>
     </NavigationContainer>
