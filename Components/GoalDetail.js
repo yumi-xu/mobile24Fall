@@ -54,7 +54,7 @@ const GoalDetails = ({ route }) => {
           id: {route.params.goal.id}
         </Text>
       ) : (
-        <Text>More Details</Text>
+        <Text style={isWarning ? [styles.detailText, styles.warningText] : styles.detailText}>More Details</Text>
       )}
 
       <Button title="More details" onPress={moreDetailHandle} />
