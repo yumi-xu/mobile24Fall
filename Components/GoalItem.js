@@ -13,7 +13,6 @@ export default function GoalItem({ onDelete, item }) {
   return (
     <View style={styles.wrap}>
       <Pressable
-        // styles={styles.horizontal}
         style={({ pressed }) => [
           styles.horizontal,
           pressed && styles.pressableStyle,
@@ -22,12 +21,10 @@ export default function GoalItem({ onDelete, item }) {
         android_ripple={{ color: "#dddddd", borderless: false }}
       >
         <Text style={styles.inputText}>{item.text}</Text>
-        {/*<PressableButton title="X" onPress={onDelete} />*/}
         <PressableButton
           componentStyle={styles.deleteButton}
           pressedHandler={onDelete}
           pressedStyle={styles.pressableStyle}>
-          {/*<Text style={styles.deleteText}>X</Text>*/}
           <AntDesign name="delete" size={24} color="black" />
         </PressableButton>
       </Pressable>
