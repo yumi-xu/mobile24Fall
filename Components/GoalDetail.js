@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const GoalDetails = ({ route }) => {
   console.log(route.params);
@@ -25,13 +26,19 @@ const GoalDetails = ({ route }) => {
         />
       ),
       headerRight: () => (
-        <Button
-          title="Warning"
-          color="#ff3333"
-          onPress={() => {
-            setIsWarning(true);
-          }}
-        />
+        // <Button
+        //   title="Warning"
+        //   color="#ff3333"
+        //   onPress={() => {
+        //     setIsWarning(true);
+        //   }}
+        // />
+        <PressableButton
+          componentStyle={styles.headerButton}
+          pressedHandler={() => setIsWarning(true)}
+          pressedStyle={styles.pressableStyle}>
+          <AntDesign name="warning" size={24} color= "orange" />
+        </PressableButton>
       ),
       title: headerTitle,
     });
@@ -78,6 +85,14 @@ const styles = StyleSheet.create({
   },
   warningText: {
     color: "#ff0000",
+  },
+  headerButton: {
+    padding: 10,
+    marginRight: 10,
+  },
+  pressableStyle: {
+    opacity: 0.5,
+    backgroundColor: "#E6E6FA",
   },
 });
 
