@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import PressableButton from "./PressableButton";
 
 const GoalDetails = ({ route }) => {
   console.log(route.params);
