@@ -55,18 +55,15 @@ export default function Home() {
       <StatusBar style="auto" />
       <View style={styles.topSection}>
         <Text style={styles.headerText}>{appName}</Text>
-        <PressableButton pressedHandler={function (){
-          setIsModalVisible(true);
-        }} componentStyle={styles.addButton}
-                         pressedStyle={styles.pressableStyle}
+        <PressableButton
+          pressedHandler={function () {
+            setIsModalVisible(true);
+          }}
+          componentStyle={styles.addButton}
+          pressedStyle={styles.pressableStyle}
         >
           <Text style={styles.buttonText}>Add a Goal</Text>
         </PressableButton>
-        {/*<Button*/}
-        {/*  style={styles.btnAddGoal}*/}
-        {/*  title="Add a goal"*/}
-        {/*  onPress={() => setIsModalVisible(true)}*/}
-        {/*/>*/}
       </View>
 
       <Input
@@ -161,12 +158,12 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     borderWidth: 0,
   },
-  buttonText:{
+  buttonText: {
     color: "white",
     fontSize: 20,
   },
-  addButton:{
-    backgroundColor:"red"
+  addButton: {
+    backgroundColor: "red",
   },
   pressableStyle: {
     opacity: 0.5,
