@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Pressable } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,13 +9,17 @@ export default function GoalItem({ onDelete, item }) {
     navigation.navigate("Details", { goal: item });
   };
   return (
-    <View style={styles.wrap}>
-      <View style={styles.textWrapper}>
-        <Text style={styles.inputText}>{item.text}</Text>
-        <Button title="X" color="red" onPress={onDelete} />
-        <Button title="i" color="blue" onPress={onNavigate} />
+    <Pressable
+      onPress={onNavigate}
+      android_ripple={{ color: "#dddddd", borderless: false }}
+    >
+      <View style={styles.wrap}>
+        <View style={styles.textWrapper}>
+          <Text style={styles.inputText}>{item.text}</Text>
+          <Button title="X" color="red" onPress={onDelete} />
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

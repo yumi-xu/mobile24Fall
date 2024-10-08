@@ -19,7 +19,7 @@ const GoalDetails = ({ route }) => {
       headerLeft: () => (
         <Button
           title="All My Goals"
-          color="#fff"
+          color="#99ffff"
           onPress={() => navigation.goBack()}
         />
       ),
