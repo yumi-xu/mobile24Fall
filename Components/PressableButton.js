@@ -23,7 +23,7 @@ const PressableButton = ({
 };
 
 const styles = StyleSheet.create({
-  defaultStyle: { backgroundColor: "white" },
+  defaultStyle: { backgroundColor: "white" , padding:5, borderRadius: 5},
   button: {
     backgroundColor: "#ff6666",
     borderRadius: 5,
