@@ -9,17 +9,20 @@ export default function GoalItem({ onDelete, item }) {
     navigation.navigate("Details", { goal: item });
   };
   return (
-    <Pressable
-      onPress={onNavigate}
-      android_ripple={{ color: "#dddddd", borderless: false }}
-    >
-      <View style={styles.wrap}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.inputText}>{item.text}</Text>
-          <Button title="X" color="red" onPress={onDelete} />
-        </View>
-      </View>
-    </Pressable>
+    <View style={styles.wrap}>
+      <Pressable
+        // styles={styles.horizontal}
+        style={({ pressed }) => [
+          styles.horizontal,
+          pressed && styles.pressableStyle
+        ]}
+        onPress={onNavigate}
+        android_ripple={{ color: "#dddddd", borderless: false }}
+      >
+        <Text style={styles.inputText}>{item.text}</Text>
+        <Button title="X" color="red" onPress={onDelete} />
+      </Pressable>
+    </View>
   );
 }
 
@@ -48,4 +51,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderRadius: 5,
   },
+  horizontal: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  pressableStyle:{
+    opacity: 0.5,
+    backgroundColor: "#E6E6FA"
+  }
 });
