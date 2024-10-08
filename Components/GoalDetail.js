@@ -26,13 +26,6 @@ const GoalDetails = ({ route }) => {
         />
       ),
       headerRight: () => (
-        // <Button
-        //   title="Warning"
-        //   color="#ff3333"
-        //   onPress={() => {
-        //     setIsWarning(true);
-        //   }}
-        // />
         <PressableButton
           componentStyle={styles.headerButton}
           pressedHandler={() => setIsWarning(true)}
