@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from "./PressableButton";
 
 export default function Home() {
   const appName = "Welcome to My awesome app";
@@ -54,11 +55,15 @@ export default function Home() {
       <StatusBar style="auto" />
       <View style={styles.topSection}>
         <Text style={styles.headerText}>{appName}</Text>
-        <Button
-          style={styles.btnAddGoal}
-          title="Add a goal"
-          onPress={() => setIsModalVisible(true)}
-        />
+        <PressableButton
+          pressedHandler={function () {
+            setIsModalVisible(true);
+          }}
+          componentStyle={styles.addButton}
+          pressedStyle={styles.pressableStyle}
+        >
+          <Text style={styles.buttonText}>Add a Goal</Text>
+        </PressableButton>
       </View>
 
       <Input
@@ -152,5 +157,16 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderColor: "transparent",
     borderWidth: 0,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+  },
+  addButton: {
+    backgroundColor: "red",
+  },
+  pressableStyle: {
+    opacity: 0.5,
+    backgroundColor: "pink",
   },
 });
