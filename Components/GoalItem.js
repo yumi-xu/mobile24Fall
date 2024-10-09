@@ -1,10 +1,10 @@
-import {View, Text, StyleSheet, Button, Pressable, Alert} from "react-native";
+import { View, Text, StyleSheet, Button, Pressable, Alert } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default function GoalItem({ onDelete, item }) {
+export default function GoalItem({ onDelete, item, onPressIn, onPressOut }) {
   const navigation = useNavigation();
 
   const onNavigate = () => {
@@ -20,9 +20,9 @@ export default function GoalItem({ onDelete, item }) {
         { text: "Cancel", style: "cancel" },
         { text: "Delete", style: "destructive", onPress: onDelete },
       ],
-      { cancelable: true }
+      { cancelable: true },
     );
-  }
+  };
 
   return (
     <View style={styles.wrap}>
@@ -32,6 +32,8 @@ export default function GoalItem({ onDelete, item }) {
           pressed && styles.pressableStyle,
         ]}
         onPress={onNavigate}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
         onLongPress={handleLongPress}
         android_ripple={{ color: "#dddddd", borderless: false }}
       >
@@ -39,7 +41,8 @@ export default function GoalItem({ onDelete, item }) {
         <PressableButton
           componentStyle={styles.deleteButton}
           pressedHandler={onDelete}
-          pressedStyle={styles.pressableStyle}>
+          pressedStyle={styles.pressableStyle}
+        >
           <AntDesign name="delete" size={24} color="black" />
         </PressableButton>
       </Pressable>
@@ -66,17 +69,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputText: {
+    flex: 1,
     fontSize: 30,
     padding: 5,
     color: "purple",
-    textAlign: "center",
-    borderRadius: 5,
+    textAlign: "left",
   },
   horizontal: {
-    backgroundColor:"lightgrey",
+    width: 200,
+    backgroundColor: "lightgrey",
     flexDirection: "row",
     alignItems: "center",
-    margin: 5,
+    padding: 10,
+    borderRadius: 10,
   },
   pressableStyle: {
     opacity: 0.5,

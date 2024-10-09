@@ -50,6 +50,18 @@ export default function Home() {
     ]);
   };
 
+  // Separator component with color change functionality
+  const renderSeparator = ({ highlighted }) => {
+    return (
+      <View
+        style={[
+          styles.separator,
+          { backgroundColor: highlighted ? "purple" : "grey" },
+        ]}
+      />
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -84,14 +96,16 @@ export default function Home() {
           ListEmptyComponent={() => (
             <Text style={styles.goalsHeaderText}>No goals to show</Text>
           )}
-          renderItem={(itemData) => (
+          renderItem={({ item, index, separators }) => (
             <GoalItem
-              item={itemData.item}
-              onDelete={() => deleteGoalHandler(itemData.item.id)}
+              item={item}
+              onDelete={() => deleteGoalHandler(item.id)}
+              onPressIn={() => separators.highlight()}
+              onPressOut={() => separators.unhighlight()}
             />
           )}
           keyExtractor={(item) => item.id}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ItemSeparatorComponent={renderSeparator}
           ListFooterComponent={() =>
             goals.length > 0 ? (
               <Button title="Delete all" onPress={deleteAllGoalsHandler} />
@@ -151,12 +165,14 @@ const styles = StyleSheet.create({
   },
 
   separator: {
-    height: 2,
+    height: 3,
     width: 200,
     backgroundColor: "grey",
     alignSelf: "center",
     borderColor: "transparent",
     borderWidth: 0,
+    marginTop: 10,
+    marginBottom: 10,
   },
   buttonText: {
     color: "white",
