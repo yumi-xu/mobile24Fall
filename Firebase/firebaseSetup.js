@@ -16,7 +16,7 @@ import { getFirestore } from "firebase/firestore";
 //   appId: process.env.EXPO_PUBLIC_appId,
 //   measurementId: process.env.EXPO_PUBLIC_measurementId,
 // };
-
+console.log(process.env);
 const firebaseConfig = {
   apiKey: "AIzaSyDltuZqNe41tGmhplEMPasUseBPI8ZgU9c",
   authDomain: "goals-app-e9259.firebaseapp.com",
@@ -28,9 +28,4 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
 export const database = getFirestore(app);
-// export const database = getFirestore(app, {
-//   experimentalForceLongPolling: true,
-//   useFetchStreams: false,
-// });
