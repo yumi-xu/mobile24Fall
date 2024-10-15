@@ -22,7 +22,6 @@ import {
 import { collection, onSnapshot } from "firebase/firestore";
 
 export default function Home() {
-  console.log(database);
   const appName = "Welcome to My awesome app";
 
   const [goals, setGoals] = useState([]);
@@ -31,10 +30,8 @@ export default function Home() {
   useEffect(() => {
     onSnapshot(collection(database, "goals"), (querySnapshot) => {
       let newArray = [];
-      console.log(querySnapshot);
       querySnapshot.forEach((docSnapshot) => {
         newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
-        console.log("getnewarray is :" + newArray);
       });
       setGoals(newArray);
     });
