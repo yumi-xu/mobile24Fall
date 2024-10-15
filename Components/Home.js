@@ -8,11 +8,18 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { database } from "../Firebase/firebaseSetup";
+import {
+  deleteAllFromDB,
+  deleteFromDB,
+  writeToDB,
+} from "../Firebase/firestoreHelper";
+import { collection, onSnapshot } from "firebase/firestore";
 
 export default function Home() {
   const appName = "Welcome to My awesome app";
@@ -20,10 +27,21 @@ export default function Home() {
   const [goals, setGoals] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  useEffect(() => {
+    onSnapshot(collection(database, "goals"), (querySnapshot) => {
+      let newArray = [];
+      querySnapshot.forEach((docSnapshot) => {
+        newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+      });
+      setGoals(newArray);
+    });
+  }, []);
+
   const handleInputData = (data) => {
-    const newGoal = { text: data, id: Math.random().toString() };
+    // const newGoal = { text: data, id: Math.random().toString() };
+    const newGoal = { text: data };
     //add new goals
-    setGoals((currentGoals) => [...currentGoals, newGoal]);
+    writeToDB(newGoal, "goals");
     setIsModalVisible(false);
   };
 
@@ -31,10 +49,8 @@ export default function Home() {
     setIsModalVisible(false);
   };
 
-  const deleteGoalHandler = (goalId) => {
-    setGoals((currentGoals) => {
-      return currentGoals.filter((goal) => goal.id !== goalId);
-    });
+  const deleteGoalHandler = (deleteId) => {
+    deleteFromDB(deleteId, "goals");
   };
 
   const deleteAllGoalsHandler = () => {
@@ -45,7 +61,7 @@ export default function Home() {
       },
       {
         text: "Yes",
-        onPress: () => setGoals([]),
+        onPress: () => deleteAllFromDB("goals"),
       },
     ]);
   };
