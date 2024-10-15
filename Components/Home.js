@@ -8,12 +8,14 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { database } from "../Firebase/firebaseSetup";
+import { writeToDB } from "../Firebase/firestoreHelper";
+import { collection, onSnapshot } from "firebase/firestore";
 
 export default function Home() {
   console.log(database);
@@ -22,10 +24,24 @@ export default function Home() {
   const [goals, setGoals] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  useEffect(() => {
+    onSnapshot(collection(database, "goals"), (querySnapshot) => {
+      let newArray = [];
+      console.log(querySnapshot);
+      querySnapshot.forEach((docSnapshot) => {
+        newArray.push(docSnapshot.data());
+        console.log("getnewarray is :" + newArray);
+      });
+      setGoals(newArray);
+    });
+  }, []);
+
   const handleInputData = (data) => {
-    const newGoal = { text: data, id: Math.random().toString() };
+    // const newGoal = { text: data, id: Math.random().toString() };
+    const newGoal = { text: data };
+    writeToDB(newGoal, "goals");
     //add new goals
-    setGoals((currentGoals) => [...currentGoals, newGoal]);
+    // setGoals((currentGoals) => [...currentGoals, newGoal]);
     setIsModalVisible(false);
   };
 
