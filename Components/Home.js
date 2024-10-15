@@ -13,8 +13,10 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { app } from "../Firebase/firebaseSetup";
 
 export default function Home() {
+  console.log(app);
   const appName = "Welcome to My awesome app";
 
   const [goals, setGoals] = useState([]);
