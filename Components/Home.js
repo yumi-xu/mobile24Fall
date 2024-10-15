@@ -43,9 +43,8 @@ export default function Home() {
   const handleInputData = (data) => {
     // const newGoal = { text: data, id: Math.random().toString() };
     const newGoal = { text: data };
-    writeToDB(newGoal, "goals");
     //add new goals
-    // setGoals((currentGoals) => [...currentGoals, newGoal]);
+    writeToDB(newGoal, "goals");
     setIsModalVisible(false);
   };
 
@@ -55,9 +54,6 @@ export default function Home() {
 
   const deleteGoalHandler = (deleteId) => {
     deleteFromDB(deleteId, "goals");
-    // setGoals((currentGoals) => {
-    //   return currentGoals.filter((goal) => goal.id !== goalId);
-    // });
   };
 
   const deleteAllGoalsHandler = () => {
