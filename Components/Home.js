@@ -14,7 +14,11 @@ import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { database } from "../Firebase/firebaseSetup";
-import { writeToDB } from "../Firebase/firestoreHelper";
+import {
+  deleteAllFromDB,
+  deleteFromDB,
+  writeToDB,
+} from "../Firebase/firestoreHelper";
 import { collection, onSnapshot } from "firebase/firestore";
 
 export default function Home() {
@@ -29,7 +33,7 @@ export default function Home() {
       let newArray = [];
       console.log(querySnapshot);
       querySnapshot.forEach((docSnapshot) => {
-        newArray.push(docSnapshot.data());
+        newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
         console.log("getnewarray is :" + newArray);
       });
       setGoals(newArray);
@@ -49,10 +53,11 @@ export default function Home() {
     setIsModalVisible(false);
   };
 
-  const deleteGoalHandler = (goalId) => {
-    setGoals((currentGoals) => {
-      return currentGoals.filter((goal) => goal.id !== goalId);
-    });
+  const deleteGoalHandler = (deleteId) => {
+    deleteFromDB(deleteId, "goals");
+    // setGoals((currentGoals) => {
+    //   return currentGoals.filter((goal) => goal.id !== goalId);
+    // });
   };
 
   const deleteAllGoalsHandler = () => {
@@ -63,7 +68,7 @@ export default function Home() {
       },
       {
         text: "Yes",
-        onPress: () => setGoals([]),
+        onPress: () => deleteAllFromDB("goals"),
       },
     ]);
   };
