@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { addWarningToGoal } from "../Firebase/firestoreHelper";
 
 const GoalDetails = ({ route }) => {
   console.log(route.params);
@@ -28,9 +29,13 @@ const GoalDetails = ({ route }) => {
       headerRight: () => (
         <PressableButton
           componentStyle={styles.headerButton}
-          pressedHandler={() => setIsWarning(true)}
-          pressedStyle={styles.pressableStyle}>
-          <AntDesign name="warning" size={24} color= "orange" />
+          pressedHandler={() => {
+            setIsWarning(true);
+            addWarningToGoal(route.params.goal.id, "goals");
+          }}
+          pressedStyle={styles.pressableStyle}
+        >
+          <AntDesign name="warning" size={24} color="orange" />
         </PressableButton>
       ),
       title: headerTitle,
@@ -55,7 +60,15 @@ const GoalDetails = ({ route }) => {
           id: {route.params.goal.id}
         </Text>
       ) : (
-        <Text style={isWarning ? [styles.detailText, styles.warningText] : styles.detailText}>More Details</Text>
+        <Text
+          style={
+            isWarning
+              ? [styles.detailText, styles.warningText]
+              : styles.detailText
+          }
+        >
+          More Details
+        </Text>
       )}
 
       <Button title="More details" onPress={moreDetailHandle} />
