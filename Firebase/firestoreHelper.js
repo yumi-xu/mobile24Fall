@@ -4,6 +4,7 @@ import {
   addDoc,
   deleteDoc,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
@@ -33,5 +34,17 @@ export async function deleteAllFromDB(collectionName) {
     });
   } catch (err) {
     console.log("Error deleting all documents: ", err);
+  }
+}
+
+// Function to add or update a warning field
+export async function addWarningToGoal(goalId, collectionName) {
+  try {
+    const docRef = doc(database, collectionName, goalId);
+    await updateDoc(docRef, {
+      warning: true,
+    });
+  } catch (err) {
+    console.log("Error updating document with warning: ", err);
   }
 }

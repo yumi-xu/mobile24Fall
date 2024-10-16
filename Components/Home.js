@@ -28,13 +28,20 @@ export default function Home() {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    onSnapshot(collection(database, "goals"), (querySnapshot) => {
-      let newArray = [];
-      querySnapshot.forEach((docSnapshot) => {
-        newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
-      });
-      setGoals(newArray);
-    });
+    const unsubscribe = onSnapshot(
+      collection(database, "goals"),
+      (querySnapshot) => {
+        const newArray = [];
+        querySnapshot.forEach((docSnapshot) => {
+          newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+        });
+        setGoals(newArray);
+      },
+    );
+    // Cleanup function to detach the listener
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const handleInputData = (data) => {
