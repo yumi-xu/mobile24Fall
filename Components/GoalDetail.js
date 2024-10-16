@@ -6,7 +6,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { addWarningToGoal } from "../Firebase/firestoreHelper";
 
 const GoalDetails = ({ route }) => {
-  console.log(route.params);
+  // console.log(route.params);
   const navigation = useNavigation();
 
   const [isWarning, setIsWarning] = useState(() => !!route.params.goal.warning);
