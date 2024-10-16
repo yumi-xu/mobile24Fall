@@ -31,7 +31,7 @@ export default function Home() {
     const unsubscribe = onSnapshot(
       collection(database, "goals"),
       (querySnapshot) => {
-        let newArray = [];
+        const newArray = [];
         querySnapshot.forEach((docSnapshot) => {
           newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
         });

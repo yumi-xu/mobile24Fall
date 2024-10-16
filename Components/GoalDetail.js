@@ -9,7 +9,7 @@ const GoalDetails = ({ route }) => {
   console.log(route.params);
   const navigation = useNavigation();
 
-  const [isWarning, setIsWarning] = useState(false);
+  const [isWarning, setIsWarning] = useState(() => !!route.params.goal.warning);
 
   const headerTitle = isWarning
     ? "Warning!"
