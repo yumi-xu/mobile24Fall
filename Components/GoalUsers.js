@@ -1,12 +1,24 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
+import { getAllDocument, writeToDB } from "../Firebase/firestoreHelper";
 
-export default function GoalUsers() {
+export default function GoalUsers({ id }) {
+  const [users, setUsers] = useState([]);
   useEffect(() => {
-    const [users, setUsers] = useState([]);
     //fetch data
     async function fetchData() {
       try {
+        const dataFromDB = await getAllDocument(`goals/${id}/users`);
+        console.log(dataFromDB);
+        if (dataFromDB.length) {
+          setUsers(
+            dataFromDB.map((user) => {
+              return user.name;
+            }),
+          );
+          return;
+        }
+        console.log("reading data from API");
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/users/",
         );
@@ -17,8 +29,11 @@ export default function GoalUsers() {
         }
         //ok, extract data
         const data = await response.json();
+        data.forEach((user) => {
+          writeToDB(user, `/goals/${id}/users`);
+        });
+        setUsers(data.map((user) => user.name));
         //set the user
-        console.log(data[0].name);
       } catch (err) {
         console.log("fetch data error", err);
       }
@@ -27,7 +42,7 @@ export default function GoalUsers() {
   }, []);
   return (
     <View>
-      <FlatList></FlatList>
+      <FlatList data={users} renderItem={({ item }) => <Text>{item}</Text>} />
     </View>
   );
 }

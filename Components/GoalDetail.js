@@ -71,9 +71,8 @@ const GoalDetails = ({ route }) => {
           More Details
         </Text>
       )}
-
       <Button title="More details" onPress={moreDetailHandle} />
-      <GoalUsers></GoalUsers>
+      <GoalUsers id={route.params.goal.id}></GoalUsers>
     </View>
   );
 };
