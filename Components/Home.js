@@ -7,6 +7,7 @@ import {
   StatusBar,
   FlatList,
   Alert,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
@@ -162,11 +163,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "purple",
     textAlign: "center",
-    borderColor: "purple",
-    borderWidth: 2,
     padding: 10,
     borderRadius: 10,
+    borderColor: "purple",
     marginBottom: 20,
+    ...Platform.select({
+      android: {
+        borderWidth: 5,
+      },
+      default: {
+        borderWidth: 1,
+      },
+    }),
   },
 
   bottomSection: {
