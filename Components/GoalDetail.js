@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { addWarningToGoal } from "../Firebase/firestoreHelper";
+import GoalUsers from "./GoalUsers";
 
 const GoalDetails = ({ route }) => {
   // console.log(route.params);
@@ -72,6 +73,7 @@ const GoalDetails = ({ route }) => {
       )}
 
       <Button title="More details" onPress={moreDetailHandle} />
+      <GoalUsers></GoalUsers>
     </View>
   );
 };
