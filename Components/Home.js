@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
 
   topSection: {
-    flex: 1,
+    height: 120,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
