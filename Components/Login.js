@@ -20,6 +20,7 @@ export default function Login({ navigation }) {
       Alert.alert("All fields should be provided!");
       return;
     }
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -29,7 +30,7 @@ export default function Login({ navigation }) {
       const user = userCredential.user;
       Alert.alert("Success", "Logged in successfully!");
       // Optionally, navigate to another screen, e.g., Home screen
-      navigation.navigate("Home");
+      // navigation.navigate("Home");
     } catch (error) {
       Alert.alert("Error", error.message);
     }
