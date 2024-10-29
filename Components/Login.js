@@ -50,13 +50,12 @@ export default function Login({ navigation }) {
         style={styles.input}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Log In</Text>
-      </TouchableOpacity>
+      <Button title="Log In" onPress={handleLogin} />
 
-      <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-        <Text style={styles.link}>New User? Create an account</Text>
-      </TouchableOpacity>
+      <Button
+        title="New User? Create an account"
+        onPress={() => navigation.navigate("Signup")}
+      />
     </View>
   );
 }

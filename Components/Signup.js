@@ -64,13 +64,12 @@ export default function Signup({ navigation }) {
         style={styles.input}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
+      <Button title="Register" onPress={handleSignup} />
 
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.link}>Already Registered? Login</Text>
-      </TouchableOpacity>
+      <Button
+        title="Already Registered? Login"
+        onPress={() => navigation.navigate("Login")}
+      />
     </View>
   );
 }
