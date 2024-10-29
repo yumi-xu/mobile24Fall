@@ -23,6 +23,21 @@ export default function Signup({ navigation }) {
     }
 
     try {
+      if (
+        email.length === 0 ||
+        password.length === 0 ||
+        confirmPassword.length === 0
+      ) {
+        Alert.alert("All fields should be provided!");
+        return;
+      }
+      if (password !== confirmPassword) {
+        Alert.alert("Error", "password and confirm password do not match!");
+        return;
+      }
+
+      //add some more regex for email
+
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
