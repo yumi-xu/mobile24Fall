@@ -1,9 +1,34 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { auth } from "../Firebase/firebaseSetup";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const user = userCredential.user;
+      Alert.alert("Success", "Logged in successfully!");
+      // Optionally, navigate to another screen, e.g., Home screen
+      navigation.navigate("Home");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
 
   return (
     <View style={{ padding: 20 }}>
@@ -24,12 +49,7 @@ export default function Login({ navigation }) {
         style={{ borderBottomWidth: 1, marginBottom: 15 }}
       />
 
-      <Button
-        title="Log In"
-        onPress={() => {
-          /* Handle login */
-        }}
-      />
+      <Button title="Log In" onPress={handleLogin} />
 
       <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
         <Text style={{ color: "blue", marginTop: 10 }}>
