@@ -5,6 +5,8 @@ import Home from "./Components/Home";
 import GoalDetails from "./Components/GoalDetail";
 import { Button } from "react-native";
 import { headerStyles } from "./Components/Styles";
+import Signup from "./Components/Signup";
+import Login from "./Components/Login";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -23,6 +25,16 @@ export default function App() {
           name="Details"
           component={GoalDetails}
           options={{ ...headerStyles }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ title: "Signup" }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ title: "Login" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
