@@ -6,6 +6,7 @@ import {
   Button,
   TouchableOpacity,
   Alert,
+  StyleSheet,
 } from "react-native";
 import { auth } from "../Firebase/firebaseSetup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -36,40 +37,81 @@ export default function Signup({ navigation }) {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Email Address</Text>
+    <View style={styles.container}>
+      <Text style={styles.label}>Email Address</Text>
       <TextInput
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
-        style={{ borderBottomWidth: 1, marginBottom: 15 }}
+        style={styles.input}
       />
 
-      <Text>Password</Text>
+      <Text style={styles.label}>Password</Text>
       <TextInput
         value={password}
         onChangeText={setPassword}
         placeholder="Password"
         secureTextEntry
-        style={{ borderBottomWidth: 1, marginBottom: 15 }}
+        style={styles.input}
       />
 
-      <Text>Confirm Password</Text>
+      <Text style={styles.label}>Confirm Password</Text>
       <TextInput
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         placeholder="Confirm password"
         secureTextEntry
-        style={{ borderBottomWidth: 1, marginBottom: 15 }}
+        style={styles.input}
       />
 
-      <Button title="Register" onPress={handleSignup} />
+      <TouchableOpacity style={styles.button} onPress={handleSignup}>
+        <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={{ color: "blue", marginTop: 10 }}>
-          Already Registered? Login
-        </Text>
+        <Text style={styles.link}>Already Registered? Login</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  label: {
+    alignSelf: "flex-start",
+    marginLeft: 20,
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  input: {
+    width: "90%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+  },
+  button: {
+    width: "90%",
+    backgroundColor: "#6200ee",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  link: {
+    color: "#6200ee",
+    marginTop: 10,
+    fontSize: 16,
+  },
+});

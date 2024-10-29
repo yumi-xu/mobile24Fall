@@ -6,6 +6,7 @@ import {
   Button,
   TouchableOpacity,
   Alert,
+  StyleSheet,
 } from "react-native";
 import { auth } from "../Firebase/firebaseSetup";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -31,31 +32,72 @@ export default function Login({ navigation }) {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Email Address</Text>
+    <View style={styles.container}>
+      <Text style={styles.label}>Email Address</Text>
       <TextInput
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
-        style={{ borderBottomWidth: 1, marginBottom: 15 }}
+        style={styles.input}
       />
 
-      <Text>Password</Text>
+      <Text style={styles.label}>Password</Text>
       <TextInput
         value={password}
         onChangeText={setPassword}
         placeholder="Password"
         secureTextEntry
-        style={{ borderBottomWidth: 1, marginBottom: 15 }}
+        style={styles.input}
       />
 
-      <Button title="Log In" onPress={handleLogin} />
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Log In</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-        <Text style={{ color: "blue", marginTop: 10 }}>
-          New User? Create an account
-        </Text>
+        <Text style={styles.link}>New User? Create an account</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  label: {
+    alignSelf: "flex-start",
+    marginLeft: 20,
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  input: {
+    width: "90%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+  },
+  button: {
+    width: "90%",
+    backgroundColor: "#6200ee",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  link: {
+    color: "#6200ee",
+    marginTop: 10,
+    fontSize: 16,
+  },
+});
