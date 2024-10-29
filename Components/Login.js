@@ -29,8 +29,6 @@ export default function Login({ navigation }) {
       );
       const user = userCredential.user;
       Alert.alert("Success", "Logged in successfully!");
-      // Optionally, navigate to another screen, e.g., Home screen
-      // navigation.navigate("Home");
     } catch (error) {
       Alert.alert("Error", error.message);
     }

@@ -45,7 +45,6 @@ export default function Signup({ navigation }) {
       );
       const user = userCredential.user;
       Alert.alert("Success", "User registered successfully!");
-      navigation.navigate("Login");
     } catch (error) {
       Alert.alert("Error", error.message);
     }
