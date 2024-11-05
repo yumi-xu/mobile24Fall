@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
 } from "react-native";
+import ImageManager from "./ImageManager";
 
 export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
   const [text, setText] = useState("");
@@ -95,6 +96,8 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
           ) : (
             text && <Text>Character Count: {text.length}</Text>
           )}
+
+          <ImageManager />
 
           <View style={styles.buttonContainer}>
             <Button
