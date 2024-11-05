@@ -15,11 +15,19 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
   const isTextValid = text.length > 0;
+  const [imageUri, setImageUri] = useState("");
+
+  const handleImageTaken = (uri) => {
+    console.log("input get the image url" + uri);
+    setImageUri(uri);
+  };
 
   const handleConfirm = () => {
     setText("");
     if (text.length >= 3) {
-      inputHandler(text);
+      inputHandler({ text, imageUri });
+      setText("");
+      setImageUri(null);
     } else {
       Alert.alert(
         "Invalid Input",
@@ -97,7 +105,7 @@ export default function Input({ autoFocus, inputHandler, visible, onCancel }) {
             text && <Text>Character Count: {text.length}</Text>
           )}
 
-          <ImageManager />
+          <ImageManager onImageTaken={handleImageTaken} />
 
           <View style={styles.buttonContainer}>
             <Button

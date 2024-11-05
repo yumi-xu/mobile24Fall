@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Button, Alert, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-export default function ImageManager() {
+export default function ImageManager({ onImageTaken }) {
   const [imageUri, setImageUri] = useState(null);
   const [response, requestPermission] = ImagePicker.useCameraPermissions();
   console.log(response);
@@ -17,7 +17,7 @@ export default function ImageManager() {
       return newPermission.granted;
     } catch (err) {}
     console.log(err);
-    Alert.alert("11111Permission denied");
+    Alert.alert("Permission denied");
   }
 
   const takeImageHandler = async () => {
@@ -39,6 +39,7 @@ export default function ImageManager() {
         const uri = result.assets[0].uri;
         console.log("Image captured:", uri);
         setImageUri(uri);
+        onImageTaken(uri);
       }
     } catch (err) {
       console.error("Error accessing the camera:", err);

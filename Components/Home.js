@@ -55,9 +55,12 @@ export default function Home() {
 
   const handleInputData = (data) => {
     // const newGoal = { text: data, id: Math.random().toString() };
-    let newGoal = { text: data };
+    let newGoal = { text: data.text };
 
-    newGoal = { ...newGoal, owner: auth.currentUser.uid };
+    newGoal = {
+      ...newGoal,
+      owner: auth.currentUser.uid,
+    };
     console.log(newGoal);
     //add new goals
     writeToDB(newGoal, "goals");
