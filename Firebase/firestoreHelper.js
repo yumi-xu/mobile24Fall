@@ -51,12 +51,11 @@ export async function addWarningToGoal(goalId, collectionName) {
 
 export async function getAllDocument(collectionName) {
   try {
-    console.log("");
     const querySnapshot = await getDocs(collection(database, collectionName));
     const data = querySnapshot.docs.map((docSnap) => {
       return docSnap.data();
     });
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (err) {
     console.log("Error get all document: ", err);

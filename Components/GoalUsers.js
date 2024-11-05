@@ -9,7 +9,7 @@ export default function GoalUsers({ id }) {
     async function fetchData() {
       try {
         const dataFromDB = await getAllDocument(`goals/${id}/users`);
-        console.log(dataFromDB);
+        //console.log(dataFromDB);
         if (dataFromDB.length) {
           setUsers(
             dataFromDB.map((user) => {
@@ -18,7 +18,7 @@ export default function GoalUsers({ id }) {
           );
           return;
         }
-        console.log("reading data from API");
+        //console.log("reading data from API");
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/users/",
         );

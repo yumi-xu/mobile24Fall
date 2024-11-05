@@ -7,7 +7,7 @@ import { addWarningToGoal } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
 
 const GoalDetails = ({ route }) => {
-  // console.log(route.params);
+  // console.log("route params are ", route.params);
   const navigation = useNavigation();
 
   const [isWarning, setIsWarning] = useState(() => !!route.params.goal.warning);
@@ -48,28 +48,14 @@ const GoalDetails = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       {route.params ? (
-        <Text
-          style={
-            isWarning
-              ? [styles.detailText, styles.warningText]
-              : styles.detailText
-          }
-        >
+        <Text style={isWarning && styles.warningStyle}>
           Text: {route.params.goal.text} {"\n"}
           id: {route.params.goal.id}
         </Text>
       ) : (
-        <Text
-          style={
-            isWarning
-              ? [styles.detailText, styles.warningText]
-              : styles.detailText
-          }
-        >
-          More Details
-        </Text>
+        <Text style={isWarning && styles.warningStyle}>More Details</Text>
       )}
       <Button title="More details" onPress={moreDetailHandle} />
       <GoalUsers id={route.params.goal.id}></GoalUsers>
@@ -78,20 +64,8 @@ const GoalDetails = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f8f9fa",
-  },
-  detailText: {
-    fontSize: 20,
-    marginBottom: 10,
-    fontWeight: "bold",
-    color: "#000000",
-  },
-  warningText: {
-    color: "#ff0000",
+  warningStyle: {
+    color: "red",
   },
   headerButton: {
     padding: 10,
