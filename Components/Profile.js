@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { auth } from "../Firebase/firebaseSetup";
+import LocationManager from "./LocationManager";
 
 export default function Profile() {
   const user = auth.currentUser;
@@ -15,6 +16,7 @@ export default function Profile() {
       ) : (
         <Text style={styles.text}>No user logged in</Text>
       )}
+      <LocationManager />
     </View>
   );
 }
