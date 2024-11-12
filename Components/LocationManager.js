@@ -42,6 +42,10 @@ const LocationManager = () => {
   return (
     <View>
       <Button title="Locate User" onPress={locateUserHandler} />
+      <Button
+        title="Let me choose on the map"
+        onPress={() => navigation.navigate("Map")}
+      />
       {location && (
         <Image
           style={styles.location}
@@ -50,7 +54,6 @@ const LocationManager = () => {
           }}
         ></Image>
       )}
-      <Button title="View Map" onPress={() => navigation.navigate("Map")} />
     </View>
   );
 };
