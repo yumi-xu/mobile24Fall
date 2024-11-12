@@ -5,6 +5,8 @@ import PressableButton from "./PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { addWarningToGoal } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../Firebase/firebaseSetup";
 
 const GoalDetails = ({ route }) => {
   // console.log("route params are ", route.params);
@@ -43,6 +45,37 @@ const GoalDetails = ({ route }) => {
     });
   }, [navigation, headerTitle]);
 
+  // useEffect(() => {
+  //   async function getImageUri() {
+  //     try {
+  //       if (route.params.goal.imageUri) {
+  //         const imageRef = ref(storage, route.params.goal.imageUri);
+  //         const httpsImageUri = await getDownloadURL(imageRef);
+  //         console.log(httpsImageUri);
+  //         setIm
+  //       }
+  //     catch
+  //       (err)
+  //       {
+  //         console.log("Error getting image uri:", err);
+  //       }
+  //     }
+  // }
+  // useEffect(() => {
+  //   if (route.params.goal.imageUri) {
+  //     const fetchImage = async () => {
+  //       try {
+  //         const reference = ref(storage, route.params.goal.imageUri);
+  //         const url = await getDownloadURL(reference);
+  //         setImageUrl(url);
+  //       } catch (error) {
+  //         console.error("Error fetching image URL:", error);
+  //       }
+  //     };
+  //     fetchImage();
+  //   }
+  // }, [route.params.goal.imageUri]);
+
   function moreDetailHandle() {
     navigation.push("Details");
   }
@@ -56,6 +89,9 @@ const GoalDetails = ({ route }) => {
         </Text>
       ) : (
         <Text style={isWarning && styles.warningStyle}>More Details</Text>
+      )}
+      {imageUrl && (
+        <Image source={{ uri: imageUrl }} style={styles.imageStyle} />
       )}
       <Button title="More details" onPress={moreDetailHandle} />
       <GoalUsers id={route.params.goal.id}></GoalUsers>
@@ -74,6 +110,11 @@ const styles = StyleSheet.create({
   pressableStyle: {
     opacity: 0.5,
     backgroundColor: "#E6E6FA",
+  },
+  imageStyle: {
+    width: 200,
+    height: 200,
+    marginVertical: 10,
   },
 });
 
