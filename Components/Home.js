@@ -14,13 +14,13 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { database } from "../Firebase/firebaseSetup";
+import { database, auth } from "../Firebase/firebaseSetup";
 import {
   deleteAllFromDB,
   deleteFromDB,
   writeToDB,
 } from "../Firebase/firestoreHelper";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 export default function Home() {
   const appName = "Welcome to My awesome app";
@@ -30,13 +30,21 @@ export default function Home() {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(database, "goals"),
+      query(
+        collection(database, "goals"),
+        where("owner", "==", auth.currentUser.uid),
+      ),
+      //collection(database, "goals"),
       (querySnapshot) => {
         const newArray = [];
         querySnapshot.forEach((docSnapshot) => {
           newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
         });
         setGoals(newArray);
+      },
+      (error) => {
+        console.log(error);
+        Alert.alert("Something went wrong!");
       },
     );
     // Cleanup function to detach the listener
@@ -47,7 +55,13 @@ export default function Home() {
 
   const handleInputData = (data) => {
     // const newGoal = { text: data, id: Math.random().toString() };
-    const newGoal = { text: data };
+    let newGoal = { text: data.text };
+
+    newGoal = {
+      ...newGoal,
+      owner: auth.currentUser.uid,
+    };
+    console.log(newGoal);
     //add new goals
     writeToDB(newGoal, "goals");
     setIsModalVisible(false);
