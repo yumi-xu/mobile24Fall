@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { Image, View, Text, StyleSheet, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -13,6 +13,7 @@ const GoalDetails = ({ route }) => {
   const navigation = useNavigation();
 
   const [isWarning, setIsWarning] = useState(() => !!route.params.goal.warning);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const headerTitle = isWarning
     ? "Warning!"
@@ -45,36 +46,20 @@ const GoalDetails = ({ route }) => {
     });
   }, [navigation, headerTitle]);
 
-  // useEffect(() => {
-  //   async function getImageUri() {
-  //     try {
-  //       if (route.params.goal.imageUri) {
-  //         const imageRef = ref(storage, route.params.goal.imageUri);
-  //         const httpsImageUri = await getDownloadURL(imageRef);
-  //         console.log(httpsImageUri);
-  //         setIm
-  //       }
-  //     catch
-  //       (err)
-  //       {
-  //         console.log("Error getting image uri:", err);
-  //       }
-  //     }
-  // }
-  // useEffect(() => {
-  //   if (route.params.goal.imageUri) {
-  //     const fetchImage = async () => {
-  //       try {
-  //         const reference = ref(storage, route.params.goal.imageUri);
-  //         const url = await getDownloadURL(reference);
-  //         setImageUrl(url);
-  //       } catch (error) {
-  //         console.error("Error fetching image URL:", error);
-  //       }
-  //     };
-  //     fetchImage();
-  //   }
-  // }, [route.params.goal.imageUri]);
+  useEffect(() => {
+    if (route.params?.goal?.imageUri) {
+      const fetchImageUrl = async () => {
+        try {
+          const reference = ref(storage, route.params?.goal?.imageUri);
+          const url = await getDownloadURL(reference);
+          setImageUrl(url);
+        } catch (error) {
+          console.error("Error fetching image URL:", error);
+        }
+      };
+      fetchImageUrl();
+    }
+  }, [route.params?.goal.imageUri]);
 
   function moreDetailHandle() {
     navigation.push("Details");
