@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Image, View, Button } from "react-native";
 import * as Location from "expo-location";
+import { useNavigation } from "@react-navigation/native";
 
 const mapsApiKey = process.env.EXPO_PUBLIC_mapsApiKey;
 
 const LocationManager = () => {
   const [location, setLocation] = useState(null);
   const [response, requestPermission] = Location.useForegroundPermissions();
+  const navigation = useNavigation();
 
   const verifyPermission = async () => {
     if (response?.granted) {
@@ -48,6 +50,7 @@ const LocationManager = () => {
           }}
         ></Image>
       )}
+      <Button title="View Map" onPress={() => navigation.navigate("Map")} />
     </View>
   );
 };

@@ -12,6 +12,7 @@ import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import PressableButton from "./Components/PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Map from "./Components/Map";
 
 const Stack = createNativeStackNavigator();
 
@@ -86,6 +87,11 @@ export default function App() {
           headerStyle: { backgroundColor: "purple" },
           headerTintColor: "white",
         }}
+      />
+      <Stack.Screen
+        name="Map"
+        component={Map}
+        options={{ title: "Map View" }}
       />
     </>
   );
