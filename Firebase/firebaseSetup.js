@@ -18,6 +18,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.EXPO_PUBLIC_messagingSenderId,
   appId: process.env.EXPO_PUBLIC_appId,
   measurementId: process.env.EXPO_PUBLIC_measurementId,
+  mapsApiKey: process.env.EXPO_PUBLIC_mapsApiKey,
 };
 
 // const firebaseConfig = {
