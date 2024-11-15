@@ -14,13 +14,14 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { database, auth } from "../Firebase/firebaseSetup";
+import { database, auth, storage } from "../Firebase/firebaseSetup";
 import {
   deleteAllFromDB,
   deleteFromDB,
   writeToDB,
 } from "../Firebase/firestoreHelper";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { ref, uploadBytesResumable } from "firebase/storage";
 
 export default function Home() {
   const appName = "Welcome to My awesome app";
@@ -53,19 +54,47 @@ export default function Home() {
     };
   }, []);
 
-  const handleInputData = (data) => {
+  async function fetchUploadImage(uri) {
+    try {
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error(`An error occurred: ${response.status}`);
+      }
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      console.log("uploadResult is ", uploadResult);
+      return uploadResult.metadata.fullPath;
+
+      //let us upload blob to storage
+    } catch (error) {
+      console.log("fetch and get image", error);
+    }
+  }
+
+  async function handleInputData(data) {
+    console.log("App.js", data);
     // const newGoal = { text: data, id: Math.random().toString() };
+    let uri = "";
+    if (data.imageUri) {
+      uri = await fetchUploadImage(data.imageUri);
+      console.log("uri is", uri);
+    }
     let newGoal = { text: data.text };
 
     newGoal = {
       ...newGoal,
       owner: auth.currentUser.uid,
     };
-    console.log(newGoal);
+    if (uri) {
+      newGoal = { ...newGoal, imageUri: uri };
+    }
+    console.log("newGoal is", newGoal);
     //add new goals
     writeToDB(newGoal, "goals");
     setIsModalVisible(false);
-  };
+  }
 
   const handleCancel = () => {
     setIsModalVisible(false);
