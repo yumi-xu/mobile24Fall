@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Image, View, Button } from "react-native";
+import { Image, View, Button, Alert } from "react-native";
 import * as Location from "expo-location";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { saveUserLocation } from "../Firebase/firestoreHelper";
+import { auth } from "../Firebase/firebaseSetup";
 
 const mapsApiKey = process.env.EXPO_PUBLIC_mapsApiKey;
 
@@ -47,6 +49,25 @@ const LocationManager = () => {
     }
   };
 
+  const saveLocationHandler = async () => {
+    if (!location) {
+      console.log("No location to save");
+      return;
+    }
+
+    try {
+      const userId = auth.currentUser?.uid;
+      if (!userId) {
+        console.log("User is not authenticated");
+        return;
+      }
+      await saveUserLocation(userId, location);
+      Alert.alert("Success", "Location saved successfully!");
+    } catch (error) {
+      console.error("Failed to save location: ", error);
+    }
+  };
+
   return (
     <View>
       <Button title="Locate User" onPress={locateUserHandler} />
@@ -55,12 +76,15 @@ const LocationManager = () => {
         onPress={() => navigation.navigate("Map")}
       />
       {location && (
-        <Image
-          style={styles.location}
-          source={{
-            uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
-          }}
-        ></Image>
+        <>
+          <Image
+            style={styles.location}
+            source={{
+              uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
+            }}
+          />
+          <Button title="Save Location" onPress={saveLocationHandler} />
+        </>
       )}
     </View>
   );
