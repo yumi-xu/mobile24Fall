@@ -6,6 +6,7 @@ import {
   getDocs,
   updateDoc,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
@@ -75,5 +76,22 @@ export async function saveUserLocation(userId, location) {
     console.log("User location saved successfully!");
   } catch (error) {
     console.error("Error saving user location: ", error);
+  }
+}
+
+export async function getUserLocation(userId) {
+  try {
+    const userDoc = doc(database, "users", userId);
+    const docSnapshot = await getDoc(userDoc);
+
+    if (docSnapshot.exists()) {
+      return docSnapshot.data().location; // Assuming location is stored in the "location" field
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user location: ", error);
+    return null;
   }
 }

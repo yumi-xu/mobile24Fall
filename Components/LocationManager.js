@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Image, View, Button, Alert } from "react-native";
 import * as Location from "expo-location";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { saveUserLocation } from "../Firebase/firestoreHelper";
+import { getUserLocation, saveUserLocation } from "../Firebase/firestoreHelper";
 import { auth } from "../Firebase/firebaseSetup";
 
 const mapsApiKey = process.env.EXPO_PUBLIC_mapsApiKey;
@@ -12,6 +12,24 @@ const LocationManager = () => {
   const [response, requestPermission] = Location.useForegroundPermissions();
   const navigation = useNavigation();
   const route = useRoute();
+
+  // Fetch the saved location from Firestore on component mount
+  useEffect(() => {
+    const fetchSavedLocation = async () => {
+      const userId = auth.currentUser?.uid;
+      if (!userId) {
+        console.log("User is not authenticated");
+        return;
+      }
+
+      const savedLocation = await getUserLocation(userId);
+      if (savedLocation) {
+        setLocation(savedLocation);
+      }
+    };
+
+    fetchSavedLocation();
+  }, []);
 
   // Check if route.params contains location and update the state
   useEffect(() => {
