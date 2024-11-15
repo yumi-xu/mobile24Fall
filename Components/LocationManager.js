@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, View, Button } from "react-native";
 import * as Location from "expo-location";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const mapsApiKey = process.env.EXPO_PUBLIC_mapsApiKey;
 
@@ -9,6 +9,14 @@ const LocationManager = () => {
   const [location, setLocation] = useState(null);
   const [response, requestPermission] = Location.useForegroundPermissions();
   const navigation = useNavigation();
+  const route = useRoute();
+
+  // Check if route.params contains location and update the state
+  useEffect(() => {
+    if (route.params?.location) {
+      setLocation(route.params.location);
+    }
+  }, [route.params?.location]);
 
   const verifyPermission = async () => {
     if (response?.granted) {
