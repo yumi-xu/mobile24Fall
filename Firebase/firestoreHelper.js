@@ -87,7 +87,7 @@ export async function getOneDocument(id, collectionName) {
     if (docSnapshot.exists()) {
       return docSnapshot.data().location; // Assuming location is stored in the "location" field
     } else {
-      console.log("No such document!");
+      //console.log("No such document!");
       return null;
     }
   } catch (error) {

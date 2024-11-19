@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { auth } from "../Firebase/firebaseSetup";
 import LocationManager from "./LocationManager";
+import NotificationManager from "./NotificationManager";
 import { useRoute } from "@react-navigation/native";
 
 export default function Profile() {
@@ -25,6 +26,7 @@ export default function Profile() {
         </Text>
       )}
       <LocationManager />
+      <NotificationManager />
     </View>
   );
 }
