@@ -12,7 +12,9 @@ const GoalDetails = ({ route }) => {
   // console.log("route params are ", route.params);
   const navigation = useNavigation();
 
-  const [isWarning, setIsWarning] = useState(() => !!route.params.goal.warning);
+  const [isWarning, setIsWarning] = useState(
+    () => route.params && !!route.params.goal.warning,
+  );
   const [imageUrl, setImageUrl] = useState(null);
 
   const headerTitle = isWarning
@@ -79,7 +81,7 @@ const GoalDetails = ({ route }) => {
         <Image source={{ uri: imageUrl }} style={styles.imageStyle} />
       )}
       <Button title="More details" onPress={moreDetailHandle} />
-      <GoalUsers id={route.params.goal.id}></GoalUsers>
+      {route.params && <GoalUsers id={route.params.goal.id}></GoalUsers>}
     </View>
   );
 };
