@@ -61,7 +61,7 @@ const LocationManager = () => {
         latitude: userLocation.coords.latitude,
         longitude: userLocation.coords.longitude,
       });
-      console.log(userLocation);
+      console.log("my current location", userLocation);
     } catch (err) {
       console.log("locate user error:", err);
     }
