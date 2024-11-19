@@ -79,9 +79,9 @@ export async function saveUserLocation(userId, location) {
   }
 }
 
-export async function getUserLocation(userId) {
+export async function getOneDocument(id, collectionName) {
   try {
-    const userDoc = doc(database, "users", userId);
+    const userDoc = doc(database, collectionName, id);
     const docSnapshot = await getDoc(userDoc);
 
     if (docSnapshot.exists()) {

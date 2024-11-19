@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { Image, View, Button, Alert } from "react-native";
 import * as Location from "expo-location";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { getUserLocation, saveUserLocation } from "../Firebase/firestoreHelper";
+import {
+  getOneDocument,
+  getUserLocation,
+  saveUserLocation,
+} from "../Firebase/firestoreHelper";
 import { auth } from "../Firebase/firebaseSetup";
 
 const mapsApiKey = process.env.EXPO_PUBLIC_mapsApiKey;
@@ -22,7 +26,7 @@ const LocationManager = () => {
         return;
       }
 
-      const savedLocation = await getUserLocation(userId);
+      const savedLocation = await getOneDocument(userId, "users");
       if (savedLocation) {
         setLocation(savedLocation);
       }
@@ -101,7 +105,11 @@ const LocationManager = () => {
               uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
             }}
           />
-          <Button title="Save Location" onPress={saveLocationHandler} />
+          <Button
+            disabled={!location}
+            title="Save Location"
+            onPress={saveLocationHandler}
+          />
         </>
       )}
     </View>
