@@ -5,7 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./Firebase/firebaseSetup";
 import Home from "./Components/Home";
 import GoalDetails from "./Components/GoalDetail";
-import { Button } from "react-native";
+import { Button, Alert } from "react-native";
 import { headerStyles } from "./Components/Styles";
 import Profile from "./Components/Profile";
 import Signup from "./Components/Signup";
@@ -13,11 +13,30 @@ import Login from "./Components/Login";
 import PressableButton from "./Components/PressableButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Map from "./Components/Map";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        Alert.alert("Notification Received", notification.request.content.body);
+      },
+    );
+
+    return () => subscription.remove();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

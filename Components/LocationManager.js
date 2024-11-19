@@ -1,7 +1,13 @@
-import { useState } from "react";
-import { Image, View, Button } from "react-native";
+import { useEffect, useState } from "react";
+import { Image, View, Button, Alert } from "react-native";
 import * as Location from "expo-location";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  getOneDocument,
+  getUserLocation,
+  saveUserLocation,
+} from "../Firebase/firestoreHelper";
+import { auth } from "../Firebase/firebaseSetup";
 
 const mapsApiKey = process.env.EXPO_PUBLIC_mapsApiKey;
 
@@ -9,6 +15,32 @@ const LocationManager = () => {
   const [location, setLocation] = useState(null);
   const [response, requestPermission] = Location.useForegroundPermissions();
   const navigation = useNavigation();
+  const route = useRoute();
+
+  // Fetch the saved location from Firestore on component mount
+  useEffect(() => {
+    const fetchSavedLocation = async () => {
+      const userId = auth.currentUser?.uid;
+      if (!userId) {
+        console.log("User is not authenticated");
+        return;
+      }
+
+      const savedLocation = await getOneDocument(userId, "users");
+      if (savedLocation) {
+        setLocation(savedLocation);
+      }
+    };
+
+    fetchSavedLocation();
+  }, []);
+
+  // Check if route.params contains location and update the state
+  useEffect(() => {
+    if (route.params?.location) {
+      setLocation(route.params.location);
+    }
+  }, [route.params?.location]);
 
   const verifyPermission = async () => {
     if (response?.granted) {
@@ -33,9 +65,28 @@ const LocationManager = () => {
         latitude: userLocation.coords.latitude,
         longitude: userLocation.coords.longitude,
       });
-      console.log(userLocation);
+      console.log("my current location", userLocation);
     } catch (err) {
       console.log("locate user error:", err);
+    }
+  };
+
+  const saveLocationHandler = async () => {
+    if (!location) {
+      console.log("No location to save");
+      return;
+    }
+
+    try {
+      const userId = auth.currentUser?.uid;
+      if (!userId) {
+        console.log("User is not authenticated");
+        return;
+      }
+      await saveUserLocation(userId, location);
+      Alert.alert("Success", "Location saved successfully!");
+    } catch (error) {
+      console.error("Failed to save location: ", error);
     }
   };
 
@@ -47,12 +98,19 @@ const LocationManager = () => {
         onPress={() => navigation.navigate("Map")}
       />
       {location && (
-        <Image
-          style={styles.location}
-          source={{
-            uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
-          }}
-        ></Image>
+        <>
+          <Image
+            style={styles.location}
+            source={{
+              uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
+            }}
+          />
+          <Button
+            disabled={!location}
+            title="Save Location"
+            onPress={saveLocationHandler}
+          />
+        </>
       )}
     </View>
   );

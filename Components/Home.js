@@ -22,12 +22,53 @@ import {
 } from "../Firebase/firestoreHelper";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ref, uploadBytesResumable } from "firebase/storage";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
 export default function Home() {
   const appName = "Welcome to My awesome app";
 
   const [goals, setGoals] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    const fetchPushToken = async () => {
+      try {
+        const { status: existingStatus } =
+          await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== "granted") {
+          const { status } = await Notifications.requestPermissionsAsync();
+          finalStatus = status;
+        }
+        if (finalStatus !== "granted") {
+          Alert.alert(
+            "Permission Denied",
+            "Failed to get push notification permissions.",
+          );
+          return;
+        }
+
+        // Android special
+        if (Platform.OS === "android") {
+          await Notifications.setNotificationChannelAsync("default", {
+            name: "default",
+            importance: Notifications.AndroidImportance.MAX,
+          });
+        }
+
+        const token = await Notifications.getExpoPushTokenAsync({
+          projectId: "37d28735-9545-456b-b6da-8450d9770f84",
+          //projectId: Constants.expoConfig.extra.eas.projectId,
+        });
+        console.log("Push Token:", token.data);
+      } catch (error) {
+        console.error("Error fetching push token:", error);
+      }
+    };
+
+    fetchPushToken();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(

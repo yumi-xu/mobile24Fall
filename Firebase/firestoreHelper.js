@@ -5,6 +5,8 @@ import {
   deleteDoc,
   getDocs,
   updateDoc,
+  setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
@@ -59,5 +61,37 @@ export async function getAllDocument(collectionName) {
     return data;
   } catch (err) {
     console.log("Error get all document: ", err);
+  }
+}
+
+// Function to save user location to Firestore
+export async function saveUserLocation(userId, location) {
+  try {
+    const userDoc = doc(database, "users", userId);
+    await setDoc(
+      userDoc,
+      { location },
+      { merge: true }, // Ensure existing fields are preserved
+    );
+    console.log("User location saved successfully!");
+  } catch (error) {
+    console.error("Error saving user location: ", error);
+  }
+}
+
+export async function getOneDocument(id, collectionName) {
+  try {
+    const userDoc = doc(database, collectionName, id);
+    const docSnapshot = await getDoc(userDoc);
+
+    if (docSnapshot.exists()) {
+      return docSnapshot.data().location; // Assuming location is stored in the "location" field
+    } else {
+      //console.log("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user location: ", error);
+    return null;
   }
 }
