@@ -2,14 +2,6 @@ import React from "react";
 import { View, Button, StyleSheet, Alert } from "react-native";
 import * as Notifications from "expo-notifications";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
-
 export default function NotificationManager() {
   const verifyPermission = async () => {
     const settings = await Notifications.getPermissionsAsync();
