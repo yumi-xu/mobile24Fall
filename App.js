@@ -5,7 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./Firebase/firebaseSetup";
 import Home from "./Components/Home";
 import GoalDetails from "./Components/GoalDetail";
-import { Button } from "react-native";
+import { Button, Alert } from "react-native";
 import { headerStyles } from "./Components/Styles";
 import Profile from "./Components/Profile";
 import Signup from "./Components/Signup";
@@ -27,6 +27,16 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        Alert.alert("Notification Received", notification.request.content.body);
+      },
+    );
+
+    return () => subscription.remove();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
